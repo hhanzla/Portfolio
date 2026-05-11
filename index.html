@@ -8,51 +8,28 @@
     <title>Hanzla Masood</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Dongle:wght@300;400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
     <!-- ============================================ -->
-    <!-- HERO SECTION                                 -->
+    <!-- NEW HERO & NAVBAR DESIGN                     -->
     <!-- ============================================ -->
-    <section id="hero-section"
-        class="min-h-screen w-full flex flex-col items-center justify-center animated-gradient-bg relative bg-cover bg-center bg-no-repeat transition-all duration-500">
-
-        <!-- Dismiss All Tooltips Button -->
-        <button id="dismiss-all-tooltips"
-            class="hide-on-mobile absolute bottom-[100px] right-6 z-[99999] bg-black/30 hover:bg-black/50 backdrop-blur-md border border-white/20 text-white font-medium py-1.5 px-3 rounded shadow-lg transition-all text-xs flex items-center gap-1 hidden opacity-0 transition-opacity duration-300">
-            <span>✕</span> Hide All Messages
-        </button>
-
-        <!-- Fun Feature: Hero Background Upload -->
-        <div class="absolute top-[80px] left-6 z-50 flex flex-col gap-2 hide-on-mobile">
-            <label for="hero-bg-upload" id="upload-bg-btn"
-                class="cursor-pointer bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white font-semibold py-2 px-4 rounded shadow-lg transition-all text-sm flex items-center gap-2 relative">
-                <i data-lucide="image" class="w-4 h-4"></i> Upload Hero BG
-
-                <!-- Upload Tooltip -->
-                <div class="tour-tooltip tooltip-upload" id="tooltip-upload">
-                    <div class="tooltip-content">
-                        <h3 class="tooltip-title">📸 Fun Feature!</h3>
-                        <p class="tooltip-desc">Click here to upload your favorite background image and Apply it.</p>
-                        <button type="button" class="tooltip-close"
-                            onclick="document.getElementById('tooltip-upload').style.display='none'; event.stopPropagation(); event.preventDefault();">Got
-                            it</button>
-                    </div>
-                </div>
-            </label>
-            <input type="file" id="hero-bg-upload" accept="image/*" class="hidden">
-
-            <div id="hero-bg-actions" class="hidden flex gap-2">
-                <button id="apply-bg-btn"
-                    class="bg-green-500/80 hover:bg-green-600/90 text-white font-bold py-[6px] px-3 rounded text-xs transition-all shadow">Apply</button>
-                <button id="cancel-bg-btn"
-                    class="bg-red-500/80 hover:bg-red-600/90 text-white font-bold py-[6px] px-3 rounded text-xs transition-all shadow">Cancel</button>
-            </div>
-        </div>
-
-        <!-- Full-page snowfall (behind everything) -->
+    <div class="brand"><span class="brand-icon"></span>Hanzla</div>
+    <nav class="navbar">
+        <ul>
+            <li><button id="open-about-btn-header">ABOUT</button></li>
+            <li><button id="open-work-btn-header">WORK</button></li>
+            <li><button id="open-contact-btn-header">CONTACT</button></li>
+            <li><button id="open-contact-btn-header-cta" class="work-with-us">WORK WITH US</button></li>
+        </ul>
+    </nav>
+    <div class="hero">
+        <!-- Snowfall effect -->
         <div class="hero-snow" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span><span></span>
@@ -60,181 +37,30 @@
             <span></span><span></span><span></span><span></span><span></span>
         </div>
 
-        <!-- Top Marquee: Left sliding ticker -->
-        <div
-            class="marquee-wrapper absolute top-0 w-full overflow-hidden bg-white/10 backdrop-blur-md z-20 border-b border-white/20 text-white py-4">
-            <div class="marquee-strip marquee-go-left" aria-hidden="true">
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-            </div>
-            <div class="marquee-strip marquee-go-left" aria-hidden="true">
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-            </div>
+        <div class="hero-content">
+            <h1 class="hero-title">DIGITAL<br>ARCHITECT</h1>
+            <p class="hero-subtitle">Building the next generation of web experiences.</p>
         </div>
 
-        <!-- Main Hero content -->
-        <div class="text-center px-6 relative z-10 w-full flex flex-col items-center justify-center min-h-screen">
-            <h1
-                class="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight uppercase stretch-h1 whitespace-nowrap flex-nowrap flex-row">
-                <span>Hanzla</span>
-                <span class="sr-only">Hanzla</span>
-                <span aria-hidden="true">
-                    <span>Mas</span>
-                    <span class="stretch-o"></span>
-                    <span class="stretch-o"></span>
-                    <span>d</span>
+        <!-- Bottom Left Text -->
+        <div class="hero-bottom-left">
+            <p>EST. 2026</p>
+            <p style="margin-top: 5px;">BASED IN PAKISTAN</p>
+        </div>
+
+        <!-- Bottom Right Split Diagonal Button -->
+        <div class="hero-btn-container" id="hero-discover-btn">
+            <button class="hero-diagonal-main"><span>EXPLORE WORK</span></button>
+            <button class="hero-diagonal-arrow">
+                <span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </span>
-            </h1>
-            <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto font-medium">Creating fast, aesthetic and
-                functional web solutions.</p>
+            </button>
         </div>
-        <!-- Bottom Marquee: Right sliding ticker -->
-        <div
-            class="marquee-wrapper absolute bottom-0 w-full overflow-hidden bg-white/10 backdrop-blur-md z-20 border-t border-white/20 text-white py-4">
-            <div class="marquee-strip marquee-go-right" aria-hidden="true">
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-            </div>
-            <div class="marquee-strip marquee-go-right" aria-hidden="true">
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-                <span>Hanzla Masood</span><span>★</span>
-                <span>Web Developer</span><span>★</span>
-                <span>UI/UX Design</span><span>★</span>
-                <span>Frontend Developer</span><span>★</span>
-                <span>HTML</span><span>★</span>
-                <span>CSS</span><span>★</span>
-                <span>JavaScript</span><span>★</span>
-                <span>React JS</span><span>★</span>
-                <span>Next JS</span><span>★</span>
-                <span>Tailwind CSS</span><span>★</span>
-            </div>
-        </div>
-
-        <!-- Draggable Clock Widget -->
-        <div id="hero-clock" class="hero-clock hide-on-mobile" title="Drag me!">
-            <div class="hero-clock-time" id="clock-time">00:00:00</div>
-            <div class="hero-clock-date" id="clock-date">Mon, 00 Jan</div>
-
-            <!-- Clock Tooltip -->
-            <div class="tour-tooltip tooltip-clock" id="tooltip-clock">
-                <div class="tooltip-content">
-                    <h3 class="tooltip-title">🕐 Drag Me!</h3>
-                    <p class="tooltip-desc">Click and drag to move this clock anywhere on the screen.</p>
-                    <button class="tooltip-close"
-                        onclick="document.getElementById('tooltip-clock').style.display='none'; event.stopPropagation();">Got
-                        it</button>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- ============================================ -->
-    <!-- BOTTOM NAVBAR SECTION (Relume Tailwind)      -->
-    <!-- ============================================ -->
-    <section id="relume">
-        <!-- Floating container for Navbar -->
-        <div id="draggable-navbar"
-            class="fixed z-[999] flex items-center justify-center bottom-[5rem] md:bottom-6 left-1/2 -translate-x-1/2 cursor-grab">
-
-            <!-- Navbar Tooltip -->
-            <div class="tour-tooltip tooltip-navbar hide-on-mobile" id="tooltip-navbar">
-                <div class="tooltip-content">
-                    <h3 class="tooltip-title">🖱️ Drag Me!</h3>
-                    <p class="tooltip-desc">Grab this navigation bar to move it around the screen.</p>
-                    <button class="tooltip-close"
-                        onclick="document.getElementById('tooltip-navbar').style.display='none'; event.stopPropagation();">Got
-                        it</button>
-                </div>
-            </div>
-
-            <!-- Navbar inner content box -->
-            <div
-                class="mx-auto flex min-h-16 w-full items-center justify-center border border-gray-200 bg-white px-5 shadow-md rounded select-none">
-                <!-- Drag Handle -->
-                <div class="flex flex-col gap-1 mr-4 opacity-40 cursor-grab active:cursor-grabbing">
-                    <span class="block w-4 h-0.5 bg-gray-500 rounded"></span>
-                    <span class="block w-4 h-0.5 bg-gray-500 rounded"></span>
-                    <span class="block w-4 h-0.5 bg-gray-500 rounded"></span>
-                </div>
-                <div class="flex w-full flex-row gap-4">
-                    <div class="navbar-btn-wrap">
-                        <button id="open-about-btn">About</button>
-                    </div>
-                    <div class="navbar-btn-wrap">
-                        <button id="open-work-btn">Work</button>
-                    </div>
-                    <div class="navbar-btn-wrap">
-                        <button id="open-contact-btn">Contact</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- ============================================ -->
     <!-- WORK MODAL                                    -->
@@ -338,7 +164,7 @@
                 <div class="mt-2 text-gray-900">
                     <span id="popup-tag"
                         class="inline-block px-3 py-1 mb-2 text-[10px] font-bold tracking-widest uppercase text-blue-800 bg-blue-100 border border-blue-200 rounded-full">Tag</span>
-                    <h2 id="popup-title" class="text-xl md:text-2xl font-extrabold text-gray-900 mb-2 font-['Poppins']">
+                    <h2 id="popup-title" class="text-xl md:text-2xl font-extrabold text-gray-900 mb-2 font-['Dongle']">
                         Project Title</h2>
                     <div id="popup-desc" class="text-xs md:text-sm text-gray-800 leading-relaxed mb-4 font-medium">
                         Detailed project description goes here.
