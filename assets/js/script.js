@@ -244,22 +244,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursorGlow) cursorGlow.classList.add('modal-active');
         if (hasGsap) {
             if (contactTimeline) contactTimeline.kill();
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
 
             const contactTitle = modal.querySelector('.contact-title');
             const contactItems = modal.querySelectorAll('.contact-badge, .contact-subtext, .contact-email-box, .contact-social-card, .contact-meta-row');
             
-            gsap.set(modal, { opacity: 0, y: '100%', scale: 0.98 });
-            gsap.set(contactItems, { opacity: 0, y: 20 });
+            gsap.set(modal, { opacity: 1, y: '100%', scale: 1 });
+            gsap.set(contactItems, { opacity: 0, y: 15 });
             if (contactTitle) gsap.set(contactTitle, { opacity: 0 });
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
 
             contactTimeline = gsap.timeline();
             
-            // 1. Modal container slides in first
+            // 1. Modal container slides UP from bottom off-screen
             contactTimeline.to(modal, {
-                opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power3.out', force3D: true
+                y: '0%', opacity: 1, duration: 0.55, ease: 'power3.out', force3D: true
             });
 
             // 2. Typewriter heading & subtext transition
@@ -269,10 +270,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (contactSubtext) animateTypewriter(contactSubtext, 0.022);
             }, '-=0.1');
 
-            // 3. Body content transitions in slowly and smoothly
+            // 3. Body content transitions in smoothly
             contactTimeline.to(contactItems, {
-                opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', clearProps: 'transform', force3D: true
-            }, '+=0.15');
+                opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out', force3D: true
+            }, '+=0.1');
 
         } else {
             modal.classList.add('is-open');
@@ -294,15 +295,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     modal.classList.remove('is-open');
                     modal.setAttribute('aria-hidden', 'true');
                     document.body.style.overflow = '';
+                    gsap.set(modal, { clearProps: 'all' });
                 }
             });
             contactTimeline
-                .to(modal.querySelectorAll('.contact-card > *'),
-                    { opacity: 0, y: 20, duration: 0.2, stagger: 0.03, ease: 'power2.in' }
+                .to(modal.querySelectorAll('.contact-title, .contact-badge, .contact-subtext, .contact-email-box, .contact-social-card, .contact-meta-row'),
+                    { opacity: 0, y: 15, duration: 0.15, stagger: 0.02, ease: 'power2.in' }
                 )
                 .to(modal, 
-                    { opacity: 0, y: '100%', scale: 0.96, duration: 0.4, ease: 'power3.in' },
-                    '-=0.1'
+                    { y: '100%', opacity: 1, duration: 0.5, ease: 'power3.inOut', force3D: true },
+                    '-=0.08'
                 );
         } else {
             modal.classList.remove('is-open');
@@ -327,176 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) closeModal();
     });
 
-    // ==========================================
-    // Project Details Popup Logic
-    // ==========================================
-    const projectPopup = document.getElementById('project-popup');
-    const projectPopupContent = document.getElementById('project-popup-content');
-    const closeProjectPopupBtn = document.getElementById('close-project-popup');
 
-    const popupTitle = document.getElementById('popup-title');
-    const popupDesc = document.getElementById('popup-desc');
-    const popupTag = document.getElementById('popup-tag');
-    const popupLive = document.getElementById('popup-link-live');
-    const popupGithub = document.getElementById('popup-link-github');
-
-    // Carousel Elements
-    const popupImage = document.getElementById('popup-image');
-    const prevImgBtn = document.getElementById('prev-project-img');
-    const nextImgBtn = document.getElementById('next-project-img');
-    const carouselIndicators = document.getElementById('carousel-indicators');
-
-    let currentImages = [];
-    let currentImgIndex = 0;
-    let popupTimeline = null;
-
-    const projectData = {
-        1: {
-            title: "Portfolio Website",
-            tag: "HTML / CSS / JS",
-            desc: "A modern, animated personal portfolio featuring a glassmorphic hero section, draggable navigation bar, full-page animated modals, and CSS marquee banners. Built entirely with Vanilla JS, HTML, and custom CSS without relying on heavy frameworks.",
-            live: "#",
-            github: "https://github.com/",
-            images: ["assets/images/project1-1.png", "assets/images/project1-2.png"]
-        },
-        2: {
-            title: "E-Commerce Dashboard",
-            tag: "React JS",
-            desc: "A fully responsive admin dashboard designed for managing products, tracking orders, and viewing analytics. Features real-time data visualization through interactive charts, intuitive UI components, and state management using React Context API.",
-            live: "#",
-            github: "https://github.com/",
-            images: ["assets/images/project2-1.png"]
-        },
-        3: {
-            title: "UI Component Library",
-            tag: "Tailwind CSS",
-            desc: "A reusable, open-source collection of highly accessible and responsive UI components. Includes advanced form elements, dynamic tables, interactive modals, and animated buttons, all meticulously styled with Tailwind CSS utility classes.",
-            live: "#",
-            github: "https://github.com/",
-            images: ["assets/images/project3-1.png"]
-        }
-    };
-
-    function updateCarousel() {
-        if (!currentImages.length) return;
-
-        popupImage.style.opacity = '0';
-        setTimeout(() => {
-            popupImage.src = currentImages[currentImgIndex];
-            popupImage.style.opacity = '1';
-        }, 300);
-
-        const dots = carouselIndicators.querySelectorAll('span');
-        dots.forEach((dot, idx) => {
-            if (idx === currentImgIndex) {
-                dot.classList.add('bg-white', 'w-4');
-                dot.classList.remove('bg-white/50', 'w-1.5');
-            } else {
-                dot.classList.remove('bg-white', 'w-4');
-                dot.classList.add('bg-white/50', 'w-1.5');
-            }
-        });
-
-        if (currentImages.length <= 1) {
-            prevImgBtn.classList.add('hidden');
-            nextImgBtn.classList.add('hidden');
-            carouselIndicators.classList.add('hidden');
-        } else {
-            prevImgBtn.classList.remove('hidden');
-            nextImgBtn.classList.remove('hidden');
-            carouselIndicators.classList.remove('hidden');
-        }
-    }
-
-    function nextImage() {
-        currentImgIndex = (currentImgIndex + 1) % currentImages.length;
-        updateCarousel();
-    }
-
-    function prevImage() {
-        currentImgIndex = (currentImgIndex - 1 + currentImages.length) % currentImages.length;
-        updateCarousel();
-    }
-
-    nextImgBtn.addEventListener('click', nextImage);
-    prevImgBtn.addEventListener('click', prevImage);
-
-    window.openProjectPopup = function (id) {
-        const data = projectData[id];
-        if (!data) return;
-
-        popupTitle.textContent = data.title;
-        popupTag.textContent = data.tag;
-        popupDesc.textContent = data.desc;
-        popupLive.href = data.live;
-        popupGithub.href = data.github;
-
-        currentImages = data.images || [];
-        currentImgIndex = 0;
-
-        carouselIndicators.innerHTML = '';
-        currentImages.forEach((_, idx) => {
-            const dot = document.createElement('span');
-            dot.className = 'h-1.5 rounded-full transition-all duration-300 pointer-events-none ' +
-                (idx === 0 ? 'bg-white w-4' : 'bg-white/50 w-1.5');
-            carouselIndicators.appendChild(dot);
-        });
-
-        updateCarousel();
-
-        if (hasGsap) {
-            if (popupTimeline) popupTimeline.kill();
-            projectPopup.classList.remove('opacity-0', 'pointer-events-none');
-            popupTimeline = gsap.timeline();
-            popupTimeline
-                .fromTo(projectPopup,
-                    { opacity: 0 },
-                    { opacity: 1, duration: 0.3, ease: 'power2.out' }
-                )
-                .fromTo(projectPopupContent,
-                    { scale: 0.8, opacity: 0, y: 25 },
-                    { scale: 1, opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.5)' },
-                    '-=0.15'
-                );
-        } else {
-            projectPopup.classList.remove('opacity-0', 'pointer-events-none');
-            projectPopupContent.classList.remove('scale-95');
-            projectPopupContent.classList.add('scale-100');
-        }
-
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-    };
-
-    function closeProjectPopup() {
-        if (hasGsap) {
-            if (popupTimeline) popupTimeline.kill();
-            popupTimeline = gsap.timeline({
-                onComplete: () => {
-                    projectPopup.classList.add('opacity-0', 'pointer-events-none');
-                }
-            });
-            popupTimeline
-                .to(projectPopupContent,
-                    { scale: 0.85, opacity: 0, y: 15, duration: 0.25, ease: 'power2.in' }
-                )
-                .to(projectPopup,
-                    { opacity: 0, duration: 0.2, ease: 'power2.in' },
-                    '-=0.1'
-                );
-        } else {
-            projectPopup.classList.add('opacity-0', 'pointer-events-none');
-            projectPopupContent.classList.remove('scale-100');
-            projectPopupContent.classList.add('scale-95');
-        }
-    }
-
-    closeProjectPopupBtn.addEventListener('click', closeProjectPopup);
-
-    projectPopup.addEventListener('click', (e) => {
-        if (e.target === projectPopup) closeProjectPopup();
-    });
 
     // ==========================================
     // About Modal Logic
@@ -510,22 +343,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursorGlow) cursorGlow.classList.add('modal-active');
         if (hasGsap) {
             if (aboutTimeline) aboutTimeline.kill();
-            aboutModal.classList.add('is-open');
-            aboutModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
 
             const aboutTitle = aboutModal.querySelector('.about-title');
             const aboutItems = aboutModal.querySelectorAll('.about-para, .about-section-heading, .about-services, .about-tags span');
             
-            gsap.set(aboutModal, { opacity: 0, y: '100%', scale: 0.98 });
-            gsap.set(aboutItems, { opacity: 0, y: 20 });
+            gsap.set(aboutModal, { opacity: 1, y: '100%', scale: 1 });
+            gsap.set(aboutItems, { opacity: 0, y: 15 });
             if (aboutTitle) gsap.set(aboutTitle, { opacity: 0 });
+
+            aboutModal.classList.add('is-open');
+            aboutModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
 
             aboutTimeline = gsap.timeline();
             
-            // 1. Modal container slides in first
+            // 1. Modal container slides UP from bottom off-screen
             aboutTimeline.to(aboutModal, {
-                opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power3.out', force3D: true
+                y: '0%', opacity: 1, duration: 0.55, ease: 'power3.out', force3D: true
             });
 
             // 2. Typewriter heading transition
@@ -533,10 +367,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (aboutTitle) animateTypewriter(aboutTitle, 0.035);
             }, '-=0.1');
 
-            // 3. Body content transitions in slowly and smoothly
+            // 3. Body content transitions in smoothly
             aboutTimeline.to(aboutItems, {
-                opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out', clearProps: 'transform', force3D: true
-            }, '+=0.15');
+                opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out', force3D: true
+            }, '+=0.1');
 
         } else {
             aboutModal.classList.add('is-open');
@@ -554,15 +388,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     aboutModal.classList.remove('is-open');
                     aboutModal.setAttribute('aria-hidden', 'true');
                     document.body.style.overflow = '';
+                    gsap.set(aboutModal, { clearProps: 'all' });
                 }
             });
             aboutTimeline
                 .to(aboutModal.querySelectorAll('.about-title, .about-para, .about-section-heading, .about-services, .about-tags span'),
-                    { opacity: 0, y: 20, duration: 0.2, stagger: 0.02, ease: 'power2.in' }
+                    { opacity: 0, y: 15, duration: 0.15, stagger: 0.02, ease: 'power2.in' }
                 )
                 .to(aboutModal,
-                    { opacity: 0, y: '100%', scale: 0.96, duration: 0.45, ease: 'power3.in' },
-                    '-=0.1'
+                    { y: '100%', opacity: 1, duration: 0.5, ease: 'power3.inOut', force3D: true },
+                    '-=0.08'
                 );
         } else {
             aboutModal.classList.remove('is-open');
@@ -594,22 +429,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursorGlow) cursorGlow.classList.add('modal-active');
         if (hasGsap) {
             if (workTimeline) workTimeline.kill();
-            workModal.classList.add('is-open');
-            workModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
 
             const workTitle = workModal.querySelector('.work-title');
             const workItems = workModal.querySelectorAll('.work-item, .work-more');
             
-            gsap.set(workModal, { opacity: 0, y: 30 });
+            gsap.set(workModal, { opacity: 1, y: '100%', scale: 1 });
             gsap.set(workItems, { opacity: 0, y: 15 });
             if (workTitle) gsap.set(workTitle, { opacity: 0 });
 
+            workModal.classList.add('is-open');
+            workModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
             workTimeline = gsap.timeline();
             
-            // 1. Modal container slides in smoothly without heavy GPU composite lag
+            // 1. Modal container slides UP from bottom off-screen
             workTimeline.to(workModal, {
-                opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', force3D: true
+                y: '0%', opacity: 1, duration: 0.55, ease: 'power3.out', force3D: true
             });
 
             // 2. Typewriter heading transition
@@ -638,6 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     workModal.classList.remove('is-open');
                     workModal.setAttribute('aria-hidden', 'true');
                     document.body.style.overflow = '';
+                    gsap.set(workModal, { clearProps: 'all' });
                 }
             });
             workTimeline
@@ -645,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { opacity: 0, y: 15, duration: 0.15, stagger: 0.02, ease: 'power2.in' }
                 )
                 .to(workModal,
-                    { opacity: 0, y: 30, duration: 0.3, ease: 'power2.in' },
+                    { y: '100%', opacity: 1, duration: 0.5, ease: 'power3.inOut', force3D: true },
                     '-=0.08'
                 );
         } else {
@@ -817,7 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 6. Close Buttons (180° Elastic Spin)
-        document.querySelectorAll('.contact-close, #close-project-popup, #close-about-btn, #close-work-btn').forEach(btn => {
+        document.querySelectorAll('.contact-close, #close-about-btn, #close-work-btn').forEach(btn => {
             btn.addEventListener('mouseenter', () => {
                 gsap.to(btn, { rotation: 180, scale: 1.25, color: '#FF4500', duration: 0.5, ease: 'back.out(2)', overwrite: 'auto' });
             });
@@ -848,7 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Escape closes all modals
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') { closeModal(); closeAboutModal(); closeWorkModal(); closeProjectPopup(); }
+        if (e.key === 'Escape') { closeModal(); closeAboutModal(); closeWorkModal(); }
     });
 
     // Initialize Lucide Icons on page load

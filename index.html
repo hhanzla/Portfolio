@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="only light">
+    <meta name="supported-color-schemes" content="only light">
     <link rel="icon" type="image/png" href="assets/images/favicon.png?v=1.0">
     <title>Hanzla Masood</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/style.css?v=23.0">
+    <link rel="stylesheet" href="assets/css/style.css?v=33.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -41,13 +43,15 @@
     <!-- ============================================ -->
     <!-- NEW HERO & NAVBAR DESIGN                     -->
     <!-- ============================================ -->
-    <div class="brand"><img src="assets/images/logo.png" alt="Logo" class="brand-logo-img"></div>
-    <nav class="navbar">
+    <div class="brand" style="color-scheme: only light !important; background-image: linear-gradient(#FFFFFF, #FFFFFF) !important; background-color: #FFFFFF !important; background: #FFFFFF !important; border: 1px solid rgba(0,0,0,0.12) !important; box-shadow: 0 4px 25px rgba(0,0,0,0.18) !important;">
+        <img src="assets/images/logo.png" alt="Logo" class="brand-logo-img">
+    </div>
+    <nav class="navbar" style="color-scheme: only light !important; background-image: linear-gradient(#FFFFFF, #FFFFFF) !important; background-color: #FFFFFF !important; background: #FFFFFF !important; border: 1px solid rgba(0,0,0,0.12) !important; box-shadow: 0 4px 25px rgba(0,0,0,0.18) !important;">
         <ul>
-            <li><button id="open-about-btn-header">ABOUT</button></li>
-            <li><button id="open-work-btn-header">WORK</button></li>
-            <li><button id="open-contact-btn-header">CONTACT</button></li>
-            <li><button id="open-contact-btn-header-cta" class="work-with-us">WORK WITH US</button></li>
+            <li><button id="open-about-btn-header" style="color-scheme: only light !important; color: #111111 !important;">ABOUT</button></li>
+            <li><button id="open-work-btn-header" style="color-scheme: only light !important; color: #111111 !important;">WORK</button></li>
+            <li><button id="open-contact-btn-header" style="color-scheme: only light !important; color: #111111 !important;">CONTACT</button></li>
+            <li><button id="open-contact-btn-header-cta" class="work-with-us" style="color-scheme: only light !important;">WORK WITH US</button></li>
         </ul>
     </nav>
 
@@ -115,8 +119,7 @@
         <!-- Scrollable project list -->
         <div class="work-body">
             <!-- Project 1 -->
-            <div class="work-item cursor-pointer hover:bg-white/40 transition-colors duration-200 rounded md:px-4 px-2 -mx-2 md:-mx-4"
-                onclick="openProjectPopup(1)">
+            <div class="work-item rounded md:px-4 px-2 -mx-2 md:-mx-4">
                 <div class="work-item-top">
                     <div class="work-item-left">
                         <span class="work-num">01.</span>
@@ -129,8 +132,7 @@
             </div>
 
             <!-- Project 2 -->
-            <div class="work-item cursor-pointer hover:bg-white/40 transition-colors duration-200 rounded md:px-4 px-2 -mx-2 md:-mx-4"
-                onclick="openProjectPopup(2)">
+            <div class="work-item rounded md:px-4 px-2 -mx-2 md:-mx-4">
                 <div class="work-item-top">
                     <div class="work-item-left">
                         <span class="work-num">02.</span>
@@ -143,8 +145,7 @@
             </div>
 
             <!-- Project 3 -->
-            <div class="work-item cursor-pointer hover:bg-white/40 transition-colors duration-200 rounded md:px-4 px-2 -mx-2 md:-mx-4"
-                onclick="openProjectPopup(3)">
+            <div class="work-item rounded md:px-4 px-2 -mx-2 md:-mx-4">
                 <div class="work-item-top">
                     <div class="work-item-left">
                         <span class="work-num">03.</span>
@@ -160,59 +161,6 @@
             <div class="work-more">
                 <a href="https://github.com/" target="_blank" class="work-more-link">See other public repositories
                     &rarr;</a>
-            </div>
-        </div>
-
-        <div id="project-popup"
-            class="fixed inset-0 z-[10010] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
-            <div class="relative w-full max-w-md bg-white/95 backdrop-blur-3xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] rounded p-5 transform scale-95 transition-transform duration-300"
-                id="project-popup-content">
-                <button id="close-project-popup"
-                    class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded w-8 h-8 flex items-center justify-center transition-all z-10">
-                    &times;
-                </button>
-
-                <!-- Project Image Carousel -->
-                <div class="relative w-full aspect-video mb-4 bg-gray-100 rounded overflow-hidden group">
-                    <img id="popup-image" src="" alt="Project Screenshot"
-                        class="w-full h-full object-cover transition-opacity duration-300">
-
-                    <!-- Carousel Controls -->
-                    <button id="prev-project-img"
-                        class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-1 rounded transition-opacity opacity-0 group-hover:opacity-100">
-                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                    </button>
-                    <button id="next-project-img"
-                        class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-1 rounded transition-opacity opacity-0 group-hover:opacity-100">
-                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                    </button>
-
-                    <!-- Image Indicators -->
-                    <div id="carousel-indicators" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                        <!-- Dots will be added here via JS -->
-                    </div>
-                </div>
-
-                <div class="mt-2 text-gray-900">
-                    <span id="popup-tag"
-                        class="inline-block px-3 py-1 mb-2 text-[10px] font-bold tracking-widest uppercase text-blue-800 bg-blue-100 border border-blue-200 rounded-full">Tag</span>
-                    <h2 id="popup-title"
-                        class="text-xl md:text-2xl font-extrabold text-gray-900 mb-2 font-['Montserrat']">
-                        Project Title</h2>
-                    <div id="popup-desc" class="text-xs md:text-sm text-gray-800 leading-relaxed mb-4 font-medium">
-                        Detailed project description goes here.
-                    </div>
-                    <div class="flex gap-3">
-                        <a href="#" id="popup-link-live" target="_blank"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded text-xs transition-all shadow-md inline-flex items-center gap-2">
-                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Live Demo
-                        </a>
-                        <a href="#" id="popup-link-github" target="_blank"
-                            class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded text-xs transition-all shadow-md inline-flex items-center gap-2">
-                            <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -324,7 +272,7 @@
         </div>
     </div>
 
-    <script src="assets/js/script.js?v=23.0"></script>
+    <script src="assets/js/script.js?v=33.0"></script>
 </body>
 
 </html>
