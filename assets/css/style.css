@@ -1840,10 +1840,137 @@ body {
     .hide-on-mobile {
         display: none !important;
     }
+}
 
-    .contact-close {
-        font-size: 1.8rem;
-        top: 1rem;
-        right: 1.5rem;
+/* =============================================
+   MOBILE RESPONSIVE FLUID SCALING (MOBILE & TABLET)
+   ============================================= */
+@media (max-width: 640px) {
+    /* Brand logo badge */
+    .brand {
+        top: 14px;
+        left: 12px;
+        height: 42px;
+        padding: 0 12px;
     }
+
+    .brand-logo-img {
+        height: 24px;
+        max-width: 120px;
+    }
+
+    /* Navbar container */
+    .navbar {
+        top: 14px;
+        right: 12px;
+        height: 42px;
+        padding: 0 4px 0 10px;
+    }
+
+    .navbar ul {
+        gap: 4px;
+    }
+
+    .navbar ul li button:not(.work-with-us) {
+        font-size: 11px;
+        padding: 6px 10px;
+        letter-spacing: 0.02em;
+    }
+
+    /* WORK WITH US button — contained inside pill */
+    .navbar ul li .work-with-us {
+        font-size: 11px;
+        padding: 8px 12px !important;
+        letter-spacing: 0.02em;
+    }
+
+    /* Hero section fluid scaling */
+    .hero-content {
+        padding: 100px 16px 120px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.6rem, 7.5vw, 2.6rem);
+    }
+
+    .hero-subtitle {
+        font-size: clamp(0.85rem, 3.5vw, 1.2rem);
+        white-space: normal;
+    }
+
+    .hero-btn-container {
+        bottom: 16px;
+        right: 14px;
+    }
+
+    .hero-diagonal-main {
+        padding: 12px 22px;
+        font-size: 11px;
+    }
+
+    .hero-diagonal-arrow {
+        padding: 12px 14px;
+    }
+
+    .hero-bottom-left {
+        bottom: 16px;
+        left: 14px;
+        font-size: 10px;
+    }
+
+    /* Contact modal fluid mobile layout */
+    .contact-card {
+        padding: 2.5rem 1.2rem;
+        max-width: 100%;
+    }
+
+    .contact-title {
+        font-size: clamp(1.5rem, 6.8vw, 2.4rem);
+    }
+
+    .contact-email {
+        font-size: clamp(0.8rem, 3.6vw, 1.1rem);
+        padding: 0.5rem 1rem;
+        word-break: break-all;
+    }
+
+    .contact-subtext {
+        font-size: 0.88rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-links {
+        gap: 0.5rem;
+    }
+
+    .contact-link {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.9rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .brand {
+        padding: 0 8px;
+    }
+    
+    .brand-logo-img {
+        max-width: 90px;
+    }
+
+    .navbar ul li button:not(.work-with-us) {
+        font-size: 10px;
+        padding: 5px 6px;
+    }
+
+    .navbar ul li .work-with-us {
+        font-size: 10px;
+        padding: 6px 8px !important;
+    }
+}
+
+.contact-close {
+    font-size: 1.8rem;
+    top: 1rem;
+    right: 1.5rem;
 }
