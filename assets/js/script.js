@@ -601,26 +601,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const workTitle = workModal.querySelector('.work-title');
             const workItems = workModal.querySelectorAll('.work-item, .work-more');
             
-            gsap.set(workModal, { opacity: 0, y: '100%', scale: 0.98 });
-            gsap.set(workItems, { opacity: 0, y: 20 });
+            gsap.set(workModal, { opacity: 0, y: 30 });
+            gsap.set(workItems, { opacity: 0, y: 15 });
             if (workTitle) gsap.set(workTitle, { opacity: 0 });
 
             workTimeline = gsap.timeline();
             
-            // 1. Modal container slides in first
+            // 1. Modal container slides in smoothly without heavy GPU composite lag
             workTimeline.to(workModal, {
-                opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power3.out', force3D: true
+                opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', force3D: true
             });
 
             // 2. Typewriter heading transition
             workTimeline.add(() => {
-                if (workTitle) animateTypewriter(workTitle, 0.035);
+                if (workTitle) animateTypewriter(workTitle, 0.03);
             }, '-=0.1');
 
-            // 3. Body content transitions in slowly and smoothly
+            // 3. Work cards reveal with lightweight stagger
             workTimeline.to(workItems, {
-                opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', clearProps: 'transform', force3D: true
-            }, '+=0.15');
+                opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out', force3D: true
+            }, '+=0.1');
 
         } else {
             workModal.classList.add('is-open');
@@ -642,11 +642,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             workTimeline
                 .to(workModal.querySelectorAll('.work-title, .work-item, .work-more'),
-                    { opacity: 0, y: 20, duration: 0.2, stagger: 0.04, ease: 'power2.in' }
+                    { opacity: 0, y: 15, duration: 0.15, stagger: 0.02, ease: 'power2.in' }
                 )
                 .to(workModal,
-                    { opacity: 0, y: '100%', scale: 0.96, duration: 0.45, ease: 'power3.in' },
-                    '-=0.1'
+                    { opacity: 0, y: 30, duration: 0.3, ease: 'power2.in' },
+                    '-=0.08'
                 );
         } else {
             workModal.classList.remove('is-open');
