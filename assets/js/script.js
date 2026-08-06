@@ -3,6 +3,49 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const hasGsap = typeof gsap !== 'undefined';
+    const cursorGlow = document.getElementById('cursor-glow');
+
+    // Typewriter transition helper function (Multi-line, Mobile-Responsive & Jitter-Free)
+    function animateTypewriter(element, speed = 0.035) {
+        if (!element) return;
+        if (!element.getAttribute('data-original-text')) {
+            element.setAttribute('data-original-text', element.innerHTML);
+        }
+        const rawText = element.getAttribute('data-original-text');
+        
+        // Preserve <br> breaks during character typing
+        const formattedRaw = rawText.replace(/<br\s*\/?>/gi, '\n');
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = formattedRaw;
+        const plainText = tempDiv.textContent || tempDiv.innerText || '';
+
+        // Make element temporarily visible to measure full rendered height on mobile screens
+        element.style.opacity = '1';
+        element.style.visibility = 'visible';
+
+        const currentHeight = element.offsetHeight || element.getBoundingClientRect().height;
+        if (currentHeight > 0) {
+            element.style.minHeight = `${currentHeight}px`;
+        }
+
+        element.textContent = '';
+
+        let obj = { count: 0 };
+        return gsap.to(obj, {
+            count: plainText.length,
+            duration: Math.max(0.35, plainText.length * speed),
+            ease: 'none',
+            onUpdate: () => {
+                const currentLength = Math.floor(obj.count);
+                const typedSubstring = plainText.substring(0, currentLength);
+                element.innerHTML = typedSubstring.replace(/\n/g, '<br>');
+            },
+            onComplete: () => {
+                element.innerHTML = rawText;
+                element.style.minHeight = '';
+            }
+        });
+    }
 
     // ==========================================
     // Preloader Logic with GSAP
@@ -19,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const duration = 1.8;
 
         if (hasGsap) {
+            // Hide typewriter text initially to prevent initial text flash
+            gsap.set(['.hero-title', '.hero-subtitle', '#hero-est-text', '#hero-based-text', '.hero-btn-container'], { opacity: 0 });
+            gsap.set('.hero-bottom-left', { opacity: 1 });
+
             // Animate initial entrance of preloader content
             gsap.fromTo('.preloader-content',
                 { opacity: 0, scale: 0.9, y: 20 },
@@ -61,20 +108,31 @@ document.addEventListener('DOMContentLoaded', () => {
                             { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out', clearProps: 'transform' },
                             '-=0.5'
                         )
-                        .fromTo('.hero-title',
-                            { opacity: 0, y: 30, scale: 0.98 },
-                            { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power4.out' },
-                            '-=0.45'
-                        )
-                        .fromTo('.hero-subtitle',
-                            { opacity: 0, y: 20 },
-                            { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-                            '-=0.4'
-                        )
-                        .fromTo('.hero-bottom-left, .hero-btn-container',
-                            { opacity: 0, y: 20 },
-                            { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' },
-                            '-=0.4'
+                        // 1. Hero Title ("DIGITAL ARCHITECT")
+                        .add(() => {
+                            const hTitle = document.querySelector('.hero-title');
+                            if (hTitle) animateTypewriter(hTitle, 0.035);
+                        }, '-=0.45')
+                        // 2. Hero Subtitle ("Building the next generation of web experiences.")
+                        .add(() => {
+                            const hSubtitle = document.querySelector('.hero-subtitle');
+                            if (hSubtitle) animateTypewriter(hSubtitle, 0.022);
+                        }, '+=0.55')
+                        // 3. EST. 2026
+                        .add(() => {
+                            const estText = document.getElementById('hero-est-text');
+                            if (estText) animateTypewriter(estText, 0.03);
+                        }, '+=0.85')
+                        // 4. BASED IN PAKISTAN
+                        .add(() => {
+                            const basedText = document.getElementById('hero-based-text');
+                            if (basedText) animateTypewriter(basedText, 0.03);
+                        }, '+=0.35')
+                        // 5. EXPLORE WORK CTA Button
+                        .fromTo('.hero-btn-container',
+                            { opacity: 0, y: 20, scale: 0.95 },
+                            { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'back.out(1.7)' },
+                            '+=0.4'
                         );
                 }
             });
@@ -183,27 +241,52 @@ document.addEventListener('DOMContentLoaded', () => {
     let contactTimeline = null;
 
     function openModal() {
-        modal.classList.add('is-open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-
+        if (cursorGlow) cursorGlow.classList.add('modal-active');
         if (hasGsap) {
             if (contactTimeline) contactTimeline.kill();
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            const contactTitle = modal.querySelector('.contact-title');
+            const contactItems = modal.querySelectorAll('.contact-badge, .contact-subtext, .contact-email-box, .contact-social-card, .contact-meta-row');
+            
+            gsap.set(modal, { opacity: 0, y: '100%', scale: 0.98 });
+            gsap.set(contactItems, { opacity: 0, y: 20 });
+            if (contactTitle) gsap.set(contactTitle, { opacity: 0 });
+
             contactTimeline = gsap.timeline();
-            contactTimeline
-                .fromTo(modal,
-                    { opacity: 0, y: '100%', scale: 0.96 },
-                    { opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power4.out' }
-                )
-                .fromTo(modal.querySelectorAll('.contact-title, .contact-email, .contact-subtext, .contact-links .navbar-btn-wrap'),
-                    { opacity: 0, y: 30 },
-                    { opacity: 1, y: 0, duration: 0.45, stagger: 0.08, ease: 'power3.out' },
-                    '-=0.3'
-                );
+            
+            // 1. Modal container slides in first
+            contactTimeline.to(modal, {
+                opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power3.out', force3D: true
+            });
+
+            // 2. Typewriter heading & subtext transition
+            contactTimeline.add(() => {
+                if (contactTitle) animateTypewriter(contactTitle, 0.035);
+                const contactSubtext = modal.querySelector('.contact-subtext');
+                if (contactSubtext) animateTypewriter(contactSubtext, 0.022);
+            }, '-=0.1');
+
+            // 3. Body content transitions in slowly and smoothly
+            contactTimeline.to(contactItems, {
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', clearProps: 'transform', force3D: true
+            }, '+=0.15');
+
+        } else {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
         }
     }
 
     function closeModal() {
+        if (cursorGlow) cursorGlow.classList.remove('modal-active');
         if (hasGsap) {
             if (contactTimeline) contactTimeline.kill();
             contactTimeline = gsap.timeline({
@@ -214,11 +297,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             contactTimeline
-                .to(modal.querySelectorAll('.contact-title, .contact-email, .contact-subtext, .contact-links .navbar-btn-wrap'),
+                .to(modal.querySelectorAll('.contact-card > *'),
                     { opacity: 0, y: 20, duration: 0.2, stagger: 0.03, ease: 'power2.in' }
                 )
-                .to(modal,
-                    { opacity: 0, y: '100%', scale: 0.96, duration: 0.45, ease: 'power3.in' },
+                .to(modal, 
+                    { opacity: 0, y: '100%', scale: 0.96, duration: 0.4, ease: 'power3.in' },
                     '-=0.1'
                 );
         } else {
@@ -424,25 +507,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let aboutTimeline = null;
 
     function openAboutModal() {
+        if (cursorGlow) cursorGlow.classList.add('modal-active');
         if (hasGsap) {
             if (aboutTimeline) aboutTimeline.kill();
-            const aboutElements = aboutModal.querySelectorAll('.about-title, .about-para, .about-section-heading, .about-services, .about-tags span');
-            gsap.set(aboutModal, { opacity: 0, y: '100%', scale: 0.96 });
-            gsap.set(aboutElements, { opacity: 0, y: 25 });
-
             aboutModal.classList.add('is-open');
             aboutModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
+            const aboutTitle = aboutModal.querySelector('.about-title');
+            const aboutItems = aboutModal.querySelectorAll('.about-para, .about-section-heading, .about-services, .about-tags span');
+            
+            gsap.set(aboutModal, { opacity: 0, y: '100%', scale: 0.98 });
+            gsap.set(aboutItems, { opacity: 0, y: 20 });
+            if (aboutTitle) gsap.set(aboutTitle, { opacity: 0 });
+
             aboutTimeline = gsap.timeline();
-            aboutTimeline
-                .to(aboutModal,
-                    { opacity: 1, y: '0%', scale: 1, duration: 0.5, ease: 'power4.out' }
-                )
-                .to(aboutElements,
-                    { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: 'power3.out', clearProps: 'transform' },
-                    '-=0.3'
-                );
+            
+            // 1. Modal container slides in first
+            aboutTimeline.to(aboutModal, {
+                opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power3.out', force3D: true
+            });
+
+            // 2. Typewriter heading transition
+            aboutTimeline.add(() => {
+                if (aboutTitle) animateTypewriter(aboutTitle, 0.035);
+            }, '-=0.1');
+
+            // 3. Body content transitions in slowly and smoothly
+            aboutTimeline.to(aboutItems, {
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out', clearProps: 'transform', force3D: true
+            }, '+=0.15');
+
         } else {
             aboutModal.classList.add('is-open');
             aboutModal.setAttribute('aria-hidden', 'false');
@@ -451,6 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeAboutModal() {
+        if (cursorGlow) cursorGlow.classList.remove('modal-active');
         if (hasGsap) {
             if (aboutTimeline) aboutTimeline.kill();
             aboutTimeline = gsap.timeline({
@@ -495,25 +591,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let workTimeline = null;
 
     function openWorkModal() {
+        if (cursorGlow) cursorGlow.classList.add('modal-active');
         if (hasGsap) {
             if (workTimeline) workTimeline.kill();
-            const workElements = workModal.querySelectorAll('.work-title, .work-item, .work-more');
-            gsap.set(workModal, { opacity: 0, y: '100%', scale: 0.96 });
-            gsap.set(workElements, { opacity: 0, y: 25 });
-
             workModal.classList.add('is-open');
             workModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
+            const workTitle = workModal.querySelector('.work-title');
+            const workItems = workModal.querySelectorAll('.work-item, .work-more');
+            
+            gsap.set(workModal, { opacity: 0, y: '100%', scale: 0.98 });
+            gsap.set(workItems, { opacity: 0, y: 20 });
+            if (workTitle) gsap.set(workTitle, { opacity: 0 });
+
             workTimeline = gsap.timeline();
-            workTimeline
-                .to(workModal,
-                    { opacity: 1, y: '0%', scale: 1, duration: 0.5, ease: 'power4.out' }
-                )
-                .to(workElements,
-                    { opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power3.out', clearProps: 'transform' },
-                    '-=0.3'
-                );
+            
+            // 1. Modal container slides in first
+            workTimeline.to(workModal, {
+                opacity: 1, y: '0%', scale: 1, duration: 0.55, ease: 'power3.out', force3D: true
+            });
+
+            // 2. Typewriter heading transition
+            workTimeline.add(() => {
+                if (workTitle) animateTypewriter(workTitle, 0.035);
+            }, '-=0.1');
+
+            // 3. Body content transitions in slowly and smoothly
+            workTimeline.to(workItems, {
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.07, ease: 'power2.out', clearProps: 'transform', force3D: true
+            }, '+=0.15');
+
         } else {
             workModal.classList.add('is-open');
             workModal.setAttribute('aria-hidden', 'false');
@@ -522,6 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeWorkModal() {
+        if (cursorGlow) cursorGlow.classList.remove('modal-active');
         if (hasGsap) {
             if (workTimeline) workTimeline.kill();
             workTimeline = gsap.timeline({
@@ -567,6 +676,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ultra-Sleek Modern GSAP Hover System
     // ==========================================
     if (hasGsap) {
+        // 0. GSAP Ember Orange Cursor Glow Follower (Modal Active Only)
+        if (cursorGlow) {
+            const xTo = gsap.quickTo(cursorGlow, "x", { duration: 0.45, ease: "power3.out" });
+            const yTo = gsap.quickTo(cursorGlow, "y", { duration: 0.45, ease: "power3.out" });
+
+            window.addEventListener('mousemove', (e) => {
+                xTo(e.clientX);
+                yTo(e.clientY);
+            });
+
+            document.querySelectorAll('a, button, .work-item, .brand, .contact-social-card, .about-tags span').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    gsap.to(cursorGlow, { scale: 1.4, opacity: 1, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(cursorGlow, { scale: 1, opacity: 0.85, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
+                });
+            });
+        }
+
         // 1. Navbar Buttons (Letter-spacing & spring lift)
         document.querySelectorAll('.navbar ul li button:not(.work-with-us)').forEach(btn => {
             btn.addEventListener('mouseenter', () => {

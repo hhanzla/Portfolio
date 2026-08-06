@@ -5,6 +5,115 @@
 }
 
 /* =============================================
+   INTERACTIVE GSAP CURSOR GLOW FOLLOWER
+   ============================================= */
+.cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 360px;
+    height: 360px;
+    margin-top: -180px;
+    margin-left: -180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(255, 69, 0, 0.32) 0%, rgba(255, 122, 0, 0.12) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 99990;
+    filter: blur(18px);
+    will-change: transform, opacity;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.cursor-glow.modal-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .cursor-glow {
+        display: none !important;
+    }
+}
+
+/* =============================================
+   AMBIENT CYBER NEON STRIP LIGHTS
+   ============================================= */
+.bg-neon-strips {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.neon-strip {
+    position: absolute;
+    background: linear-gradient(180deg, transparent 0%, #FF4500 50%, transparent 100%);
+    opacity: 0.8;
+    filter: blur(0.5px);
+    will-change: transform, opacity;
+}
+
+/* Strip 1: Top-Left Diagonal Laser Light */
+.neon-strip.strip-1 {
+    top: -20%;
+    left: 18%;
+    width: 3px;
+    height: 140%;
+    transform: rotate(25deg);
+    box-shadow: 0 0 20px #FF4500, 0 0 45px #FF4500, 0 0 75px rgba(255, 69, 0, 0.85);
+    animation: neonPulse1 4s ease-in-out infinite alternate;
+}
+
+/* Strip 2: Top-Right Diagonal Laser Light */
+.neon-strip.strip-2 {
+    top: -20%;
+    right: 25%;
+    width: 3px;
+    height: 140%;
+    transform: rotate(-22deg);
+    background: linear-gradient(180deg, transparent 0%, #FF7A00 50%, transparent 100%);
+    box-shadow: 0 0 20px #FF7A00, 0 0 45px #FF7A00, 0 0 75px rgba(255, 122, 0, 0.85);
+    animation: neonPulse2 5s ease-in-out infinite alternate 0.8s;
+}
+
+/* Strip 3: Center-Left Diagonal Accent Light */
+.neon-strip.strip-3 {
+    top: 5%;
+    left: 48%;
+    width: 2.5px;
+    height: 95%;
+    transform: rotate(35deg);
+    box-shadow: 0 0 18px #FF4500, 0 0 35px #FF4500, 0 0 65px rgba(255, 69, 0, 0.75);
+    animation: neonPulse1 6s ease-in-out infinite alternate 1.5s;
+}
+
+/* Strip 4: Bottom Horizontal Beam */
+.neon-strip.strip-4 {
+    bottom: 15%;
+    right: 8%;
+    width: 45vw;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #FF4500 50%, transparent 100%);
+    box-shadow: 0 0 25px #FF4500, 0 0 50px #FF4500, 0 0 85px rgba(255, 69, 0, 0.9);
+    animation: neonPulse2 4s ease-in-out infinite alternate 0.4s;
+}
+
+@keyframes neonPulse1 {
+    0% { opacity: 0.4; transform: rotate(25deg) translateY(-15px); }
+    50% { opacity: 0.95; box-shadow: 0 0 30px #FF4500, 0 0 65px #FF4500, 0 0 95px rgba(255, 69, 0, 1); }
+    100% { opacity: 0.4; transform: rotate(25deg) translateY(15px); }
+}
+
+@keyframes neonPulse2 {
+    0% { opacity: 0.35; }
+    50% { opacity: 0.9; box-shadow: 0 0 28px #FF7A00, 0 0 60px #FF7A00, 0 0 90px rgba(255, 122, 0, 1); }
+    100% { opacity: 0.35; }
+}
+
+/* =============================================
    PRELOADER STYLES
    ============================================= */
 /* =============================================
@@ -54,12 +163,13 @@
     will-change: opacity, transform;
 }
 
-/* Initial hidden states to eliminate starting FOUC & fluctuation */
+/* Initial hidden states to eliminate starting FOUC & flash of text */
 .brand,
 .navbar,
 .hero-title,
 .hero-subtitle,
-.hero-bottom-left,
+#hero-est-text,
+#hero-based-text,
 .hero-btn-container {
     opacity: 0;
     will-change: opacity, transform;
@@ -188,12 +298,14 @@ body {
 
 .hero-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(2.2rem, 6.2vw, 4.6rem);
+    font-size: clamp(1.8rem, 7vw, 4.6rem);
     font-weight: 900;
     margin-bottom: 0.5rem;
     letter-spacing: -0.03em;
-    line-height: 0.95;
+    line-height: 1;
     text-transform: uppercase;
+    min-height: 2em;
+    display: block;
 }
 
 .hero-subtitle {
@@ -218,10 +330,16 @@ body {
     left: 22px;
     z-index: 10;
     color: white;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
     font-size: 12px;
+    font-weight: 700;
     letter-spacing: 0.1em;
     opacity: 0.8;
+}
+
+.hero-bottom-left p {
+    min-height: 1.3em;
+    display: block;
 }
 
 .brand {
@@ -293,7 +411,7 @@ body {
     text-decoration: none;
     color: #111111;
     font-size: 13px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     padding: 8px 16px;
     border-radius: 6px;
@@ -321,7 +439,7 @@ body {
     margin: -4px 0;
     border-radius: 6px;
     font-size: 13px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 700;
     letter-spacing: 0.05em;
     transition: box-shadow 0.2s ease;
@@ -352,9 +470,9 @@ body {
     color: #222F30;
     border: none;
     padding: 16px 35px;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.1em;
     cursor: pointer;
     border-radius: 8px;
@@ -961,13 +1079,13 @@ body {
     color: #FFFFFF;
     transition: background 0.2s, color 0.2s, transform 0.2s;
     white-space: nowrap;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .navbar-btn-wrap a:hover,
 .navbar-btn-wrap button:hover {
     background: #1E1E1E;
-    color: #FF4500;
+    color: #FFFFFF !important;
 }
 
 /* =============================================
@@ -1058,13 +1176,18 @@ body {
 }
 
 .work-title {
-    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-size: clamp(1.7rem, 6.5vw, 3.8rem);
     font-weight: 900;
     color: #FFFFFF;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
     line-height: 1.1;
     letter-spacing: -0.02em;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+    min-height: 1.1em;
+    display: block;
 }
 
 /* Scrollable body */
@@ -1113,10 +1236,10 @@ body {
 
 .work-name {
     font-size: clamp(1rem, 2.5vw, 1.4rem);
-    font-weight: 700;
+    font-weight: 800;
     color: #FFFFFF;
     margin: 0;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .work-tag {
@@ -1125,11 +1248,11 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 0.4rem;
     font-size: 0.78rem;
-    font-weight: 700;
+    font-weight: 600;
     color: #E5E7EB;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(4px);
-    font-family: 'Space Mono', monospace;
+    font-family: 'Inter', sans-serif;
 }
 
 .work-desc {
@@ -1154,7 +1277,7 @@ body {
     text-decoration: underline;
     text-underline-offset: 4px;
     transition: opacity 0.2s;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .work-more-link:hover {
@@ -1294,7 +1417,7 @@ body {
 }
 
 .about-title {
-    font-size: clamp(2.5rem, 7vw, 4rem);
+    font-size: clamp(1.8rem, 7vw, 4rem);
     font-weight: 900;
     color: #FFFFFF;
     margin-bottom: 1.5rem;
@@ -1302,6 +1425,8 @@ body {
     font-family: 'Montserrat', sans-serif;
     line-height: 1.1;
     letter-spacing: -0.02em;
+    min-height: 1.1em;
+    display: block;
 }
 
 .about-para {
@@ -1366,11 +1491,11 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 999px;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 600;
     color: #F3F4F6;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(4px);
-    font-family: 'Space Mono', monospace;
+    font-family: 'Inter', sans-serif;
     transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -1392,7 +1517,7 @@ body {
     background: rgba(255, 69, 0, 0.15);
     backdrop-filter: blur(6px);
     transition: background 0.2s, box-shadow 0.2s;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .about-resume-btn:hover {
@@ -1454,13 +1579,15 @@ body {
 }
 
 .contact-title {
-    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    font-size: clamp(1.6rem, 6.5vw, 3.8rem);
     font-weight: 900;
     color: #FFFFFF;
     margin-bottom: 1.2rem;
     line-height: 1.1;
     font-family: 'Montserrat', sans-serif;
     letter-spacing: -0.02em;
+    min-height: 1.1em;
+    display: block;
 }
 
 .contact-star {
@@ -1513,7 +1640,7 @@ body {
 }
 
 .contact-link:hover {
-    color: #FF4500;
+    color: #FFFFFF !important;
 }
 
 /* Snowflakes */

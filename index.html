@@ -7,11 +7,11 @@
     <link rel="icon" type="image/png" href="assets/images/favicon.png?v=1.0">
     <title>Hanzla Masood</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/style.css?v=5.0">
+    <link rel="stylesheet" href="assets/css/style.css?v=19.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap"
         rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,6 +20,9 @@
 </head>
 
 <body>
+    <!-- Interactive Ember Orange GSAP Cursor Glow Follower -->
+    <div id="cursor-glow" class="cursor-glow" aria-hidden="true"></div>
+
     <!-- ============================================ -->
     <!-- PRELOADER OVERLAY                            -->
     <!-- ============================================ -->
@@ -47,7 +50,16 @@
             <li><button id="open-contact-btn-header-cta" class="work-with-us">WORK WITH US</button></li>
         </ul>
     </nav>
+
     <div class="hero">
+        <!-- Ambient Cyber Neon Strip Lights Background -->
+        <div class="bg-neon-strips" aria-hidden="true">
+            <div class="neon-strip strip-1"></div>
+            <div class="neon-strip strip-2"></div>
+            <div class="neon-strip strip-3"></div>
+            <div class="neon-strip strip-4"></div>
+        </div>
+
         <!-- Snowfall effect -->
         <div class="hero-snow" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span>
@@ -63,8 +75,8 @@
 
         <!-- Bottom Left Text -->
         <div class="hero-bottom-left">
-            <p>EST. 2026</p>
-            <p style="margin-top: 5px;">BASED IN PAKISTAN</p>
+            <p id="hero-est-text">EST. 2026</p>
+            <p id="hero-based-text" style="margin-top: 5px;">BASED IN PAKISTAN</p>
         </div>
 
         <!-- Bottom Right Split Diagonal Button -->
@@ -312,7 +324,7 @@
         </div>
     </div>
 
-    <script src="assets/js/script.js?v=5.0"></script>
+    <script src="assets/js/script.js?v=19.0"></script>
 </body>
 
 </html>
