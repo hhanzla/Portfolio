@@ -2,11 +2,48 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+html, body, .about-body, .work-body, .contact-modal {
+    scroll-behavior: smooth !important;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 :root {
     color-scheme: only light;
     supported-color-schemes: only light;
+}
+
+/* Custom Global Smooth Glassmorphic Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(18, 18, 18, 0.6);
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 69, 0, 0.5);
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #FF4500;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.8);
+}
+
+/* Firefox Scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 69, 0, 0.6) rgba(18, 18, 18, 0.6);
 }
 
 /* =============================================
@@ -1515,7 +1552,7 @@ body {
 .about-tags span {
     padding: 0.4rem 1rem;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 999px;
+    border-radius: 6px !important;
     font-size: 0.85rem;
     font-weight: 600;
     color: #F3F4F6;

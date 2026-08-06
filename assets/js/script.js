@@ -58,6 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (preloader) {
         document.body.style.overflow = 'hidden';
 
+        // Fail-safe preloader backup timer (guarantees preloader NEVER hangs)
+        setTimeout(() => {
+            if (preloader && preloader.style.display !== 'none') {
+                preloader.style.opacity = '0';
+                preloader.style.transition = 'opacity 0.4s ease';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    document.body.style.overflow = '';
+                }, 400);
+            }
+        }, 2200);
+
         let countObj = { val: 0 };
         const duration = 1.8;
 
