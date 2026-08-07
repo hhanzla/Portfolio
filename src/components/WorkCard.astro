@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Props {
   num: string;
   title: string;
@@ -7,96 +10,122 @@ interface Props {
   tag: string;
   isReversed?: boolean;
   iconType?: 'sun' | 'home' | 'cpu';
+  image?: ImageMetadata | string;
+  link?: string;
 }
 
-const { num, title, description, badge, tag, isReversed = false, iconType = 'sun' } = Astro.props;
+const { num, title, description, badge, tag, isReversed = false, iconType = 'sun', image, link = "https://github.com/hhanzla" } = Astro.props;
 ---
 
 <div class="work-grid-card">
     {isReversed ? (
         <>
             <div class="work-details">
-                <span class="work-num-large">{num}</span>
+                <div class="work-details-meta">
+                    <span class="work-num-large">{num}</span>
+                    <span class="work-tech-tag">{tag}</span>
+                </div>
                 <h3 class="work-title-heading">{title}</h3>
                 <p class="work-desc-text">{description}</p>
-                <a href="https://github.com/hhanzla" target="_blank" class="work-case-study-btn">
+                <a href={link} target="_blank" class="work-case-study-btn">
                     VIEW CASE STUDY <span>+</span>
                 </a>
             </div>
             <div class="work-media-placeholder">
-                <div class="placeholder-top-badge">{badge}</div>
-                <div class="placeholder-icon-wrap">
-                    <div class="placeholder-glow-ring"></div>
-                    {iconType === 'sun' && (
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                    )}
-                    {iconType === 'home' && (
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                    )}
-                    {iconType === 'cpu' && (
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    )}
-                </div>
-                <span class="placeholder-tag">{tag}</span>
+                {image ? (
+                    typeof image === 'string' ? (
+                        <img src={image} alt={title} class="work-card-img" loading="lazy" decoding="async" />
+                    ) : (
+                        <Image src={image} alt={title} width={1280} height={720} format="webp" quality={90} class="work-card-img" />
+                    )
+                ) : (
+                    <>
+                        <div class="placeholder-top-badge">{badge}</div>
+                        <div class="placeholder-icon-wrap">
+                            <div class="placeholder-glow-ring"></div>
+                            {iconType === 'sun' && (
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                            )}
+                            {iconType === 'home' && (
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            )}
+                            {iconType === 'cpu' && (
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
         </>
     ) : (
         <>
             <div class="work-media-placeholder">
-                <div class="placeholder-top-badge">{badge}</div>
-                <div class="placeholder-icon-wrap">
-                    <div class="placeholder-glow-ring"></div>
-                    {iconType === 'sun' && (
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                    )}
-                    {iconType === 'home' && (
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                    )}
-                    {iconType === 'cpu' && (
-                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    )}
-                </div>
-                <span class="placeholder-tag">{tag}</span>
+                {image ? (
+                    typeof image === 'string' ? (
+                        <img src={image} alt={title} class="work-card-img" loading="lazy" decoding="async" />
+                    ) : (
+                        <Image src={image} alt={title} width={1280} height={720} format="webp" quality={90} class="work-card-img" />
+                    )
+                ) : (
+                    <>
+                        <div class="placeholder-top-badge">{badge}</div>
+                        <div class="placeholder-icon-wrap">
+                            <div class="placeholder-glow-ring"></div>
+                            {iconType === 'sun' && (
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                            )}
+                            {iconType === 'home' && (
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            )}
+                            {iconType === 'cpu' && (
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                </svg>
+                            )}
+                        </div>
+                    </>
+                )}
             </div>
             <div class="work-details">
-                <span class="work-num-large">{num}</span>
+                <div class="work-details-meta">
+                    <span class="work-num-large">{num}</span>
+                    <span class="work-tech-tag">{tag}</span>
+                </div>
                 <h3 class="work-title-heading">{title}</h3>
                 <p class="work-desc-text">{description}</p>
-                <a href="https://github.com/hhanzla" target="_blank" class="work-case-study-btn">
+                <a href={link} target="_blank" class="work-case-study-btn">
                     VIEW CASE STUDY <span>+</span>
                 </a>
             </div>

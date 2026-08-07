@@ -1,33 +1,61 @@
 ---
 import WorkCard from './WorkCard.astro';
+import imgQwisync from '../assets/images/Qwisync.png';
+import imgMyFastMovers from '../assets/images/MyFastMovers.com.png';
+import imgThindNotary from '../assets/images/ThindNotary.com.png';
+import imgInnova8ify from '../assets/images/innova8ifyllc.com.png';
+import imgNexoraCodes from '../assets/images/NexoraCodes.com.png';
 
 const projects = [
   {
     num: "01",
-    title: "MWT - SOLAR ENGINEERING",
-    description: "Solar power systems built for real operating conditions. MWT Group studies, supplies, installs, commissions, and maintains renewable power systems for factories, homes, farms, wells, lighting, and grid-connected stations.",
-    badge: "MWT — SOLAR ENGINEERING",
-    tag: "HTML / CSS / JS",
+    title: "QwiSync",
+    description: "Premier digital agency platform serving client ecosystems across Pak & US. Features high-performance scroll animations, light strip FX, interactive scramblers, and a modular service showcase.",
+    badge: "QwiSync — Digital Agency",
+    tag: "Astro.js / Tailwind CSS / GSAP",
     isReversed: false,
-    iconType: "sun" as const
+    image: imgQwisync,
+    link: "https://qwisync-v2.pages.dev/"
   },
   {
     num: "02",
-    title: "Domo Mark",
-    description: "DomoMark is a focused Pak, US property advisory platform built for buyers and investors who need clarity, not clutter. We designed an end-to-end experience that turns scattered launches, price lists, and handover dates into a short, actionable brief.",
-    badge: "Domo Mark",
-    tag: "React JS / Next JS",
+    title: "My Fast Movers",
+    description: "Comprehensive long-distance moving platform built for nationwide US logistics. Integrates state-by-state cost calculators, interactive route finders, and real-time moving cost estimators.",
+    badge: "My Fast Movers",
+    tag: "Astro.js / Tailwind CSS / SEO",
     isReversed: true,
-    iconType: "home" as const
+    image: imgMyFastMovers,
+    link: "https://www.myfastmovers.com/"
   },
   {
     num: "03",
-    title: "TARS Protocol",
-    description: "The leading AI architecture protocol on Solana - deploy and tokenize AI agents, discover and trade top AI tokens, and unlock decentralized AI innovation.",
-    badge: "TARS Protocol",
-    tag: "Tailwind CSS / Solana AI",
+    title: "Thind Notary Public",
+    description: "Certified notarial services platform built for Sharan Thind Notary Public in Surrey, BC. Handles real estate document notarization, wills, powers of attorney, and online appointment booking.",
+    badge: "Thind Notary — Surrey, BC",
+    tag: "HTML / CSS / JS / SEO",
     isReversed: false,
-    iconType: "cpu" as const
+    image: imgThindNotary,
+    link: "https://thindnotary.com/"
+  },
+  {
+    num: "04",
+    title: "Innova8ify LLC",
+    description: "Modern digital marketing agency platform featuring custom UI components, responsive layout systems, Swiper carousel integrations, and tailored digital strategy services.",
+    badge: "Innova8ify — Digital Marketing",
+    tag: "HTML5 / Tailwind CSS / JS",
+    isReversed: true,
+    image: imgInnova8ify,
+    link: "https://innova8ifyllc.com/"
+  },
+  {
+    num: "05",
+    title: "Nexora Codes",
+    description: "Premier software development agency specializing in custom web applications, mobile apps, UI/UX design, and scalable enterprise software solutions for global brands.",
+    badge: "Nexora Codes — Software Agency",
+    tag: "Next.js / React / Node.js",
+    isReversed: false,
+    image: imgNexoraCodes,
+    link: "https://www.nexoracodes.com/"
   }
 ];
 ---
