@@ -829,14 +829,16 @@ body {
 
 .work-media-placeholder {
     position: relative;
-    min-height: 280px;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: 100%;
     background: radial-gradient(circle at center, #1A1A1A 0%, #0D0D0D 80%);
     border-right: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1.5rem;
     overflow: hidden;
 }
 
@@ -893,12 +895,14 @@ body {
 }
 
 .work-details {
-    padding: 2.5rem 2.5rem 2rem;
+    padding: 1.5rem 2rem 1.2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     background: #0B0B0B;
+    height: 100%;
+    overflow: hidden;
 }
 
 .work-num-large {
@@ -923,10 +927,15 @@ body {
 
 .work-desc-text {
     font-family: 'Inter', sans-serif;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: #9CA3AF;
-    line-height: 1.65;
-    margin-bottom: 1.8rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .work-case-study-btn {
@@ -1213,11 +1222,15 @@ body {
     .work-grid-card {
         display: flex !important;
         flex-direction: column !important;
+        min-height: auto !important;
     }
 
     .work-media-placeholder {
         order: 1 !important;
-        min-height: 220px;
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        min-height: auto !important;
         border-right: none !important;
         border-left: none !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -1226,6 +1239,32 @@ body {
     .work-details {
         order: 2 !important;
         padding: 1.8rem 1.4rem;
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+
+    /* 5. Contact links on mobile — single line layout */
+    .contact-links {
+        flex-wrap: nowrap !important;
+        gap: 0.5rem !important;
+        width: 100% !important;
+    }
+
+    .contact-link {
+        font-size: 0.72rem !important;
+        padding: 0.5rem 0.6rem !important;
+        gap: 0.35rem !important;
+        white-space: nowrap !important;
+        flex: 1 !important;
+        justify-content: center !important;
+    }
+
+    .contact-link svg {
+        width: 16px !important;
+        height: 16px !important;
+        flex-shrink: 0 !important;
     }
 
     /* ===== MOBILE PERFORMANCE OPTIMIZATIONS ===== */
