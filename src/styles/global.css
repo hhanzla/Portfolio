@@ -1269,6 +1269,15 @@ body {
         padding: 6px 10px !important;
         border-radius: 4px !important;
         letter-spacing: 0.03em !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+
+    .navbar ul li .work-with-us:hover,
+    .navbar ul li .work-with-us:active,
+    .navbar ul li .work-with-us:focus {
+        box-shadow: none !important;
+        transform: none !important;
     }
 
     /* 3. Hero section height stays consistent on mobile */
