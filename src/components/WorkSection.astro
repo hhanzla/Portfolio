@@ -1,0 +1,55 @@
+---
+import WorkCard from './WorkCard.astro';
+
+const projects = [
+  {
+    num: "01",
+    title: "MWT - SOLAR ENGINEERING",
+    description: "Solar power systems built for real operating conditions. MWT Group studies, supplies, installs, commissions, and maintains renewable power systems for factories, homes, farms, wells, lighting, and grid-connected stations.",
+    badge: "MWT — SOLAR ENGINEERING",
+    tag: "HTML / CSS / JS",
+    isReversed: false,
+    iconType: "sun" as const
+  },
+  {
+    num: "02",
+    title: "Domo Mark",
+    description: "DomoMark is a focused Pak, US property advisory platform built for buyers and investors who need clarity, not clutter. We designed an end-to-end experience that turns scattered launches, price lists, and handover dates into a short, actionable brief.",
+    badge: "Domo Mark",
+    tag: "React JS / Next JS",
+    isReversed: true,
+    iconType: "home" as const
+  },
+  {
+    num: "03",
+    title: "TARS Protocol",
+    description: "The leading AI architecture protocol on Solana - deploy and tokenize AI agents, discover and trade top AI tokens, and unlock decentralized AI innovation.",
+    badge: "TARS Protocol",
+    tag: "Tailwind CSS / Solana AI",
+    isReversed: false,
+    iconType: "cpu" as const
+  }
+];
+---
+
+<section id="work-section" class="portfolio-section">
+    <div class="section-container">
+        <div class="section-header">
+            <span class="section-tag">01 / FEATURED PROJECTS</span>
+            <h2 class="section-title work-title">Selected Works</h2>
+        </div>
+
+        <div class="work-grid-container">
+            {projects.map((project) => (
+                <WorkCard {...project} />
+            ))}
+        </div>
+
+        <!-- See more link -->
+        <div class="work-more" style="margin-top: 3rem; text-align: center;">
+            <a href="https://github.com/codewithhazzi" target="_blank" class="work-more-link">
+                See other public repositories &rarr;
+            </a>
+        </div>
+    </div>
+</section>

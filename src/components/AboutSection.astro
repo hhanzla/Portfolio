@@ -1,0 +1,43 @@
+---
+const skills = [
+  "HTML5", "CSS3", "JavaScript", "React JS", 
+  "Next JS", "Tailwind CSS", "Node JS", "Git"
+];
+---
+
+<section id="about-section" class="portfolio-section">
+    <div class="section-container">
+        <div class="section-header">
+            <span class="section-tag">02 / BIOGRAPHY &amp; SKILLS</span>
+            <h2 class="section-title about-title">My Approach</h2>
+        </div>
+
+        <div class="about-body-content">
+            <p class="about-para">
+                As a web developer, I believe the best technology is the one that feels natural to the user.
+                More than just writing code, I create digital solutions that solve real business problems.
+                My primary focus is removing technical complexity to emphasize the essence of functionality and
+                aesthetics.
+            </p>
+
+            <h3 class="about-section-heading">Services &amp; Expertise</h3>
+            <div class="about-services">
+                <ul class="about-list">
+                    <li>MERN Stack Web Development</li>
+                    <li>Responsive UI/UX Design</li>
+                </ul>
+                <ul class="about-list">
+                    <li>Database Architecture</li>
+                    <li>System Optimization</li>
+                </ul>
+            </div>
+
+            <h3 class="about-section-heading">Key Technologies</h3>
+            <div class="about-tags">
+                {skills.map((skill) => (
+                    <span>{skill}</span>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

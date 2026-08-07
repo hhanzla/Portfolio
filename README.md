@@ -1,64 +1,88 @@
-# Hanzla Masood — Portfolio
+# Hanzla Masood — Digital Architect Portfolio (Astro.js)
 
-A modern, animated personal portfolio website featuring a glassmorphic hero section, draggable UI elements, full-page modals, and smooth CSS marquee banners.
-
-## ✨ Features
-
-- **Animated Gradient Hero** — Full-screen hero with a dynamic gradient background and snowfall particle effect
-- **Custom Background Upload** — Upload and apply your own hero background image
-- **Draggable Navbar** — A floating navigation bar you can grab and reposition anywhere on screen
-- **Draggable Clock Widget** — A live clock widget that can be dragged around the hero section
-- **Full-Page Modals** — Smooth, immersive modals for About, Work, and Contact sections with snowflake animations
-- **CSS Marquee Banners** — Continuously scrolling ticker strips at the top and bottom of the hero
-- **Interactive Tooltips** — Guided tour-style tooltips that introduce fun features to first-time visitors
-- **Mobile Responsive** — Optimized layout with mobile-specific adjustments and hidden desktop-only elements
-
-## 🛠️ Tech Stack
-
-| Technology | Usage |
-|---|---|
-| **HTML5** | Semantic markup & structure |
-| **Tailwind CSS** (CDN) | Utility-first styling |
-| **Vanilla CSS** | Custom animations, modals, marquees & glassmorphism |
-| **Vanilla JavaScript** | Drag-and-drop, modals, clock, background upload |
-
-## 📁 Project Structure
-
-```
-Portfolio/
-├── index.html              # Main single-page app
-├── assets/
-│   ├── css/
-│   │   └── style.css       # Custom styles & animations
-│   ├── js/
-│   │   └── script.js       # Interactivity & drag logic
-│   ├── fonts/              # Custom fonts
-│   └── images/             # Project images & assets
-└── README.md
-```
-
-## 🚀 Getting Started
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/<your-username>/Portfolio.git
-   cd Portfolio
-   ```
-
-2. **Open in browser**
-   Simply open `index.html` in any modern browser — no build step required.
-
-3. **Or use a local server** (recommended for full functionality)
-   ```bash
-   npx serve .
-   ```
-
-## 📬 Contact
-
-- **Email:** [hanzlamasood@gmail.com](mailto:hanzlamasood@gmail.com)
-- **GitHub:** [github.com](https://github.com/codewithhazzi)
-- **LinkedIn:** [linkedin.com](https://linkedin.com/)
+A modern, high-performance personal portfolio website built with **Astro.js**, featuring a dark ember aesthetic, hardware-accelerated GSAP animations, fluid responsive design, Lenis 60 FPS smooth scroll, and Chrome Auto-Dark Mode protection.
 
 ---
 
-> Built with ❤️ by **Hanzla Masood**
+## ✨ Features
+
+- **🚀 Built with Astro.js** — Zero JS by default, ultra-fast static HTML rendering, and modular component architecture.
+- **⚡ Hardware-Accelerated GSAP Animations** — 1-to-1 continuous frame-by-frame Hero Morphing background transition on scroll, section reveals, magnetic button physics, and cursor glow follower.
+- **🌊 Lenis Smooth Scroll Engine** — 60 FPS inertia momentum scrolling and smooth section navigation.
+- **🎴 Alternating 2-Column Work Cards** — Sleek dark glassmorphic placeholders with vector icons, project title badges, and `VIEW CASE STUDY +` links.
+- **🎨 Curated 2-Font Design System** — Montserrat (headings) + Inter (body text) + Space Mono (code/numbers).
+- **🛡️ Chrome Auto-Dark Mode Immunity** — Native `<meta name="color-scheme">` directives and solid white layer workarounds for header navbar and logo badge.
+- **📱 Fluid Mobile Responsive** — Bottom floating navbar pill, adaptive font clamping, and zero overflow.
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **Astro.js (v5)** | Modern static site generator & framework |
+| **Tailwind CSS (v3)** | Utility styling & layout primitives |
+| **Vanilla CSS3** | Custom animations, glassmorphic styling, and scrollbars |
+| **GSAP 3** | High-performance 60 FPS timelines & scroll reveals |
+| **Lenis** | Smooth 60 FPS momentum scroll engine |
+| **Lucide Icons** | Vector icon set |
+
+---
+
+## 📁 Project Architecture
+
+```text
+My Portfolio/
+├── public/                     # Static assets
+│   ├── favicon.png
+│   └── logo.png
+├── src/
+│   ├── components/             # Modular Astro UI Components
+│   │   ├── Navbar.astro        # Header & Floating Draggable Navigation
+│   │   ├── Hero.astro          # Hero section + Morphing scroll script
+│   │   ├── WorkSection.astro   # Selected Works container
+│   │   ├── WorkCard.astro      # Alternating 2-column project card
+│   │   ├── AboutSection.astro  # Biography, services, 6px skill tags
+│   │   └── ContactSection.astro# Email box, social cards, footer
+│   ├── layouts/
+│   │   └── Layout.astro        # Base HTML layout, fonts, Lenis & GSAP CDN scripts
+│   ├── pages/
+│   │   └── index.astro         # Main page composing all section components
+│   └── styles/
+│       └── global.css          # Design system, glassmorphism, responsive rules
+├── astro.config.mjs            # Astro configuration
+└── package.json                # Project dependencies
+```
+
+---
+
+## 🚀 Getting Started
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Run dev server**
+   ```bash
+   npm run dev
+   ```
+   Visit `http://localhost:4321` in your browser.
+
+3. **Build for production**
+   ```bash
+   npm run build
+   ```
+   Production bundle will be output to the `dist/` directory, ready to deploy to Vercel, Netlify, or GitHub Pages!
+
+---
+
+## 📬 Contact & Links
+
+- **Location:** Based in Pakistan 🇵🇰
+- **Email:** [hanzlamasood@gmail.com](mailto:hanzlamasood@gmail.com)
+- **GitHub:** [codewithhazzi](https://github.com/codewithhazzi)
+
+---
+
+> Built with ❤️ by **Hanzla Masood** — Est. 2026

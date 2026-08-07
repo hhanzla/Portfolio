@@ -1,0 +1,77 @@
+---
+---
+
+<!-- Crisp White Header Logo Badge -->
+<div class="brand" id="brand-badge" style="color-scheme: only light !important;">
+    <img src="/logo.png" alt="Hanzla Masood Logo" class="brand-logo-img" style="color-scheme: only light !important;" />
+</div>
+
+<nav class="navbar" id="floating-navbar" style="color-scheme: only light !important;">
+    <ul>
+        <li><button id="nav-btn-work" style="color-scheme: only light !important; color: #111111 !important;">WORK</button></li>
+        <li><button id="nav-btn-about" style="color-scheme: only light !important; color: #111111 !important;">ABOUT</button></li>
+        <li><button id="nav-btn-contact" style="color-scheme: only light !important; color: #111111 !important;">CONTACT</button></li>
+        <li><button id="nav-btn-cta" class="work-with-us" style="color-scheme: only light !important;">WORK WITH US</button></li>
+    </ul>
+</nav>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        function scrollToSection(sectionId) {
+            const target = document.getElementById(sectionId);
+            if (target) {
+                if (window.lenis) {
+                    window.lenis.scrollTo(target, { duration: 1.2, offset: 0 });
+                } else {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }
+
+        const navAbout = document.getElementById('nav-btn-about');
+        const navWork = document.getElementById('nav-btn-work');
+        const navContact = document.getElementById('nav-btn-contact');
+        const navCta = document.getElementById('nav-btn-cta');
+        const brandBadge = document.getElementById('brand-badge');
+
+        if (navAbout) navAbout.addEventListener('click', () => scrollToSection('about-section'));
+        if (navWork) navWork.addEventListener('click', () => scrollToSection('work-section'));
+        if (navContact) navContact.addEventListener('click', () => scrollToSection('contact-section'));
+        if (navCta) navCta.addEventListener('click', () => scrollToSection('contact-section'));
+        if (brandBadge) brandBadge.addEventListener('click', () => scrollToSection('hero-section'));
+
+        // Draggable Navbar
+        const navbar = document.getElementById('floating-navbar');
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+
+        if (navbar) {
+            navbar.addEventListener('mousedown', (e) => {
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+                startX = e.clientX;
+                startY = e.clientY;
+                const rect = navbar.getBoundingClientRect();
+                startLeft = rect.left;
+                startTop = rect.top;
+                isDragging = true;
+                navbar.style.cursor = 'grabbing';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging || !navbar) return;
+                let newLeft = startLeft + (e.clientX - startX);
+                let newTop = startTop + (e.clientY - startY);
+                newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - navbar.offsetWidth));
+                newTop = Math.max(0, Math.min(newTop, window.innerHeight - navbar.offsetHeight));
+                navbar.style.left = newLeft + 'px';
+                navbar.style.top = newTop + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (!isDragging) return;
+                isDragging = false;
+                if (navbar) navbar.style.cursor = 'grab';
+            });
+        }
+    });
+</script>
