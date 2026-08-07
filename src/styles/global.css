@@ -10,7 +10,8 @@
     -webkit-overflow-scrolling: touch;
 }
 
-html, body {
+html,
+body {
     scroll-behavior: smooth !important;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -146,13 +147,25 @@ html, body {
 
 /* Compositor-only keyframes: ONLY opacity + transform. Zero box-shadow, zero repaint. */
 @keyframes stripPulse1 {
-    0%   { opacity: 0.35; transform: rotate(var(--r, 25deg)) translateY(-10px); }
-    100% { opacity: 0.75; transform: rotate(var(--r, 25deg)) translateY(10px); }
+    0% {
+        opacity: 0.35;
+        transform: rotate(var(--r, 25deg)) translateY(-10px);
+    }
+
+    100% {
+        opacity: 0.75;
+        transform: rotate(var(--r, 25deg)) translateY(10px);
+    }
 }
 
 @keyframes stripPulse2 {
-    0%   { opacity: 0.3; }
-    100% { opacity: 0.7; }
+    0% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 0.7;
+    }
 }
 
 
@@ -175,35 +188,176 @@ html, body {
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
 }
 
-.hero-snow span:nth-child(1) { left: 3%; width: 6px; height: 6px; animation-duration: 9s; animation-delay: 0s; }
-.hero-snow span:nth-child(2) { left: 9%; width: 10px; height: 10px; animation-duration: 12s; animation-delay: 1s; }
-.hero-snow span:nth-child(3) { left: 15%; width: 5px; height: 5px; animation-duration: 8s; animation-delay: 2.5s; }
-.hero-snow span:nth-child(4) { left: 22%; width: 8px; height: 8px; animation-duration: 14s; animation-delay: 0.5s; }
-.hero-snow span:nth-child(5) { left: 28%; width: 12px; height: 12px; animation-duration: 11s; animation-delay: 3s; }
-.hero-snow span:nth-child(6) { left: 35%; width: 4px; height: 4px; animation-duration: 7s; animation-delay: 1.5s; }
-.hero-snow span:nth-child(7) { left: 41%; width: 7px; height: 7px; animation-duration: 10s; animation-delay: 4s; }
-.hero-snow span:nth-child(8) { left: 48%; width: 9px; height: 9px; animation-duration: 13s; animation-delay: 0.8s; }
-.hero-snow span:nth-child(9) { left: 54%; width: 5px; height: 5px; animation-duration: 9s; animation-delay: 2s; }
-.hero-snow span:nth-child(10) { left: 60%; width: 11px; height: 11px; animation-duration: 15s; animation-delay: 3.5s; }
-.hero-snow span:nth-child(11) { left: 66%; width: 4px; height: 4px; animation-duration: 10s; animation-delay: 1.2s; }
-.hero-snow span:nth-child(12) { left: 72%; width: 8px; height: 8px; animation-duration: 12s; animation-delay: 5s; }
-.hero-snow span:nth-child(13) { left: 77%; width: 6px; height: 6px; animation-duration: 8s; animation-delay: 0.3s; }
-.hero-snow span:nth-child(14) { left: 82%; width: 13px; height: 13px; animation-duration: 17s; animation-delay: 2.2s; }
-.hero-snow span:nth-child(15) { left: 87%; width: 5px; height: 5px; animation-duration: 10s; animation-delay: 4.5s; }
-.hero-snow span:nth-child(16) { left: 91%; width: 7px; height: 7px; animation-duration: 11s; animation-delay: 1.8s; }
-.hero-snow span:nth-child(17) { left: 95%; width: 9px; height: 9px; animation-duration: 14s; animation-delay: 3.8s; }
-.hero-snow span:nth-child(18) { left: 19%; width: 11px; height: 11px; animation-duration: 13s; animation-delay: 6s; }
-.hero-snow span:nth-child(19) { left: 45%; width: 4px; height: 4px; animation-duration: 9s; animation-delay: 7s; }
-.hero-snow span:nth-child(20) { left: 68%; width: 7px; height: 7px; animation-duration: 15s; animation-delay: 5.5s; }
+.hero-snow span:nth-child(1) {
+    left: 3%;
+    width: 6px;
+    height: 6px;
+    animation-duration: 9s;
+    animation-delay: 0s;
+}
+
+.hero-snow span:nth-child(2) {
+    left: 9%;
+    width: 10px;
+    height: 10px;
+    animation-duration: 12s;
+    animation-delay: 1s;
+}
+
+.hero-snow span:nth-child(3) {
+    left: 15%;
+    width: 5px;
+    height: 5px;
+    animation-duration: 8s;
+    animation-delay: 2.5s;
+}
+
+.hero-snow span:nth-child(4) {
+    left: 22%;
+    width: 8px;
+    height: 8px;
+    animation-duration: 14s;
+    animation-delay: 0.5s;
+}
+
+.hero-snow span:nth-child(5) {
+    left: 28%;
+    width: 12px;
+    height: 12px;
+    animation-duration: 11s;
+    animation-delay: 3s;
+}
+
+.hero-snow span:nth-child(6) {
+    left: 35%;
+    width: 4px;
+    height: 4px;
+    animation-duration: 7s;
+    animation-delay: 1.5s;
+}
+
+.hero-snow span:nth-child(7) {
+    left: 41%;
+    width: 7px;
+    height: 7px;
+    animation-duration: 10s;
+    animation-delay: 4s;
+}
+
+.hero-snow span:nth-child(8) {
+    left: 48%;
+    width: 9px;
+    height: 9px;
+    animation-duration: 13s;
+    animation-delay: 0.8s;
+}
+
+.hero-snow span:nth-child(9) {
+    left: 54%;
+    width: 5px;
+    height: 5px;
+    animation-duration: 9s;
+    animation-delay: 2s;
+}
+
+.hero-snow span:nth-child(10) {
+    left: 60%;
+    width: 11px;
+    height: 11px;
+    animation-duration: 15s;
+    animation-delay: 3.5s;
+}
+
+.hero-snow span:nth-child(11) {
+    left: 66%;
+    width: 4px;
+    height: 4px;
+    animation-duration: 10s;
+    animation-delay: 1.2s;
+}
+
+.hero-snow span:nth-child(12) {
+    left: 72%;
+    width: 8px;
+    height: 8px;
+    animation-duration: 12s;
+    animation-delay: 5s;
+}
+
+.hero-snow span:nth-child(13) {
+    left: 77%;
+    width: 6px;
+    height: 6px;
+    animation-duration: 8s;
+    animation-delay: 0.3s;
+}
+
+.hero-snow span:nth-child(14) {
+    left: 82%;
+    width: 13px;
+    height: 13px;
+    animation-duration: 17s;
+    animation-delay: 2.2s;
+}
+
+.hero-snow span:nth-child(15) {
+    left: 87%;
+    width: 5px;
+    height: 5px;
+    animation-duration: 10s;
+    animation-delay: 4.5s;
+}
+
+.hero-snow span:nth-child(16) {
+    left: 91%;
+    width: 7px;
+    height: 7px;
+    animation-duration: 11s;
+    animation-delay: 1.8s;
+}
+
+.hero-snow span:nth-child(17) {
+    left: 95%;
+    width: 9px;
+    height: 9px;
+    animation-duration: 14s;
+    animation-delay: 3.8s;
+}
+
+.hero-snow span:nth-child(18) {
+    left: 19%;
+    width: 11px;
+    height: 11px;
+    animation-duration: 13s;
+    animation-delay: 6s;
+}
+
+.hero-snow span:nth-child(19) {
+    left: 45%;
+    width: 4px;
+    height: 4px;
+    animation-duration: 9s;
+    animation-delay: 7s;
+}
+
+.hero-snow span:nth-child(20) {
+    left: 68%;
+    width: 7px;
+    height: 7px;
+    animation-duration: 15s;
+    animation-delay: 5.5s;
+}
 
 @keyframes heroSnowfall {
     0% {
         transform: translateY(0) rotate(0deg);
         opacity: 0.9;
     }
+
     80% {
         opacity: 0.8;
     }
+
     100% {
         transform: translateY(110vh) rotate(720deg);
         opacity: 0;
@@ -235,8 +389,15 @@ html, body {
 }
 
 @keyframes preloaderPulseGlow {
-    0% { transform: scale(0.9); opacity: 0.6; }
-    100% { transform: scale(1.15); opacity: 1; }
+    0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
 }
 
 .preloader-content {
@@ -872,7 +1033,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 0;
 }
 
 /* Exact 6px Border Radius on Skill Badges */
@@ -992,6 +1153,7 @@ body {
 
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
+
     /* 1. Hide EXPLORE WORK button & bottom-left text on mobile */
     .hero-btn-container,
     .hero-bottom-left {
@@ -1075,7 +1237,7 @@ body {
 
     /* Light strips are now GPU-friendly (compositor-only), safe to keep on mobile */
     .bg-neon-strips {
-        opacity: 0.3;
+        opacity: 0.8;
     }
 
     /* Remove blur from placeholder glow ring */
@@ -1098,6 +1260,7 @@ body {
 
 /* Respect user's motion preferences — kills all animations for battery saver / accessibility */
 @media (prefers-reduced-motion: reduce) {
+
     .hero-snow,
     .bg-neon-strips {
         display: none !important;

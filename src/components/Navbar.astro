@@ -8,10 +8,10 @@
 
 <nav class="navbar" id="floating-navbar" style="color-scheme: only light !important;">
     <ul>
-        <li><button id="nav-btn-work" style="color-scheme: only light !important; color: #111111 !important;">WORK</button></li>
-        <li><button id="nav-btn-about" style="color-scheme: only light !important; color: #111111 !important;">ABOUT</button></li>
-        <li><button id="nav-btn-contact" style="color-scheme: only light !important; color: #111111 !important;">CONTACT</button></li>
-        <li><button id="nav-btn-cta" class="work-with-us" style="color-scheme: only light !important;">WORK WITH US</button></li>
+        <li><button id="nav-btn-work" class="glitch-hover" data-text="WORK" style="color-scheme: only light !important; color: #111111 !important;">WORK</button></li>
+        <li><button id="nav-btn-about" class="glitch-hover" data-text="ABOUT" style="color-scheme: only light !important; color: #111111 !important;">ABOUT</button></li>
+        <li><button id="nav-btn-contact" class="glitch-hover" data-text="CONTACT" style="color-scheme: only light !important; color: #111111 !important;">CONTACT</button></li>
+        <li><button id="nav-btn-cta" class="work-with-us glitch-hover" data-text="WORK WITH US" style="color-scheme: only light !important;">WORK WITH US</button></li>
     </ul>
 </nav>
 
@@ -73,5 +73,54 @@
                 if (navbar) navbar.style.cursor = 'grab';
             });
         }
+        // Glitch / Scramble Text Hover Effect
+        const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`01';
+        const glitchBtns = document.querySelectorAll('.glitch-hover');
+
+        glitchBtns.forEach(btn => {
+            let isAnimating = false;
+
+            btn.addEventListener('mouseenter', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+
+                // Lock button width so glitch chars don't resize navbar
+                const currentWidth = btn.offsetWidth;
+                btn.style.minWidth = currentWidth + 'px';
+                btn.style.maxWidth = currentWidth + 'px';
+
+                const originalText = btn.getAttribute('data-text') || btn.textContent;
+                const length = originalText.length;
+                const totalDuration = 400; // ms
+                const iterations = 6;
+                const intervalTime = totalDuration / (length * iterations);
+                let resolved = 0;
+
+                const interval = setInterval(() => {
+                    let display = '';
+                    for (let i = 0; i < length; i++) {
+                        if (i < resolved) {
+                            display += originalText[i];
+                        } else if (originalText[i] === ' ') {
+                            display += ' ';
+                        } else {
+                            display += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+                        }
+                    }
+                    btn.textContent = display;
+
+                    // Resolve one more character every few iterations
+                    if (Math.random() > 0.5 && resolved < length) {
+                        resolved++;
+                    }
+
+                    if (resolved >= length) {
+                        clearInterval(interval);
+                        btn.textContent = originalText;
+                        isAnimating = false;
+                    }
+                }, intervalTime);
+            });
+        });
     });
 </script>
