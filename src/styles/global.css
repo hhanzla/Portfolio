@@ -81,7 +81,9 @@ html, body {
     }
 }
 
-/* Ambient Cyber Neon Strip Lights Background */
+/* Ambient Neon Strip Lights — original shapes, GPU-friendly animation.
+   Same diagonal layout as before but using compositor-only animation
+   (transform + opacity). No animated box-shadow = no repaint per frame. */
 .bg-neon-strips {
     position: absolute;
     inset: 0;
@@ -93,8 +95,7 @@ html, body {
 .neon-strip {
     position: absolute;
     background: linear-gradient(180deg, transparent 0%, #FF4500 50%, transparent 100%);
-    opacity: 0.8;
-    filter: blur(0.5px);
+    filter: blur(1px);
     will-change: transform, opacity;
 }
 
@@ -104,8 +105,9 @@ html, body {
     width: 3px;
     height: 140%;
     transform: rotate(25deg);
-    box-shadow: 0 0 20px #FF4500, 0 0 45px #FF4500, 0 0 75px rgba(255, 69, 0, 0.85);
-    animation: neonPulse1 4s ease-in-out infinite alternate;
+    opacity: 0.6;
+    box-shadow: 0 0 15px #FF4500, 0 0 40px rgba(255, 69, 0, 0.6);
+    animation: stripPulse1 4s ease-in-out infinite alternate;
 }
 
 .neon-strip.strip-2 {
@@ -115,8 +117,9 @@ html, body {
     height: 140%;
     transform: rotate(-22deg);
     background: linear-gradient(180deg, transparent 0%, #FF7A00 50%, transparent 100%);
-    box-shadow: 0 0 20px #FF7A00, 0 0 45px #FF7A00, 0 0 75px rgba(255, 122, 0, 0.85);
-    animation: neonPulse2 5s ease-in-out infinite alternate 0.8s;
+    opacity: 0.5;
+    box-shadow: 0 0 15px #FF7A00, 0 0 40px rgba(255, 122, 0, 0.6);
+    animation: stripPulse1 5s ease-in-out infinite alternate 0.8s;
 }
 
 .neon-strip.strip-3 {
@@ -125,8 +128,9 @@ html, body {
     width: 2.5px;
     height: 95%;
     transform: rotate(35deg);
-    box-shadow: 0 0 18px #FF4500, 0 0 35px #FF4500, 0 0 65px rgba(255, 69, 0, 0.75);
-    animation: neonPulse1 6s ease-in-out infinite alternate 1.5s;
+    opacity: 0.5;
+    box-shadow: 0 0 12px #FF4500, 0 0 35px rgba(255, 69, 0, 0.5);
+    animation: stripPulse1 6s ease-in-out infinite alternate 1.5s;
 }
 
 .neon-strip.strip-4 {
@@ -135,21 +139,22 @@ html, body {
     width: 45vw;
     height: 3px;
     background: linear-gradient(90deg, transparent 0%, #FF4500 50%, transparent 100%);
-    box-shadow: 0 0 25px #FF4500, 0 0 50px #FF4500, 0 0 85px rgba(255, 69, 0, 0.9);
-    animation: neonPulse2 4s ease-in-out infinite alternate 0.4s;
+    opacity: 0.55;
+    box-shadow: 0 0 18px #FF4500, 0 0 45px rgba(255, 69, 0, 0.65);
+    animation: stripPulse2 4s ease-in-out infinite alternate 0.4s;
 }
 
-@keyframes neonPulse1 {
-    0% { opacity: 0.4; transform: rotate(25deg) translateY(-15px); }
-    50% { opacity: 0.95; box-shadow: 0 0 30px #FF4500, 0 0 65px #FF4500, 0 0 95px rgba(255, 69, 0, 1); }
-    100% { opacity: 0.4; transform: rotate(25deg) translateY(15px); }
+/* Compositor-only keyframes: ONLY opacity + transform. Zero box-shadow, zero repaint. */
+@keyframes stripPulse1 {
+    0%   { opacity: 0.35; transform: rotate(var(--r, 25deg)) translateY(-10px); }
+    100% { opacity: 0.75; transform: rotate(var(--r, 25deg)) translateY(10px); }
 }
 
-@keyframes neonPulse2 {
-    0% { opacity: 0.35; }
-    50% { opacity: 0.9; box-shadow: 0 0 28px #FF7A00, 0 0 60px #FF7A00, 0 0 90px rgba(255, 122, 0, 1); }
-    100% { opacity: 0.35; }
+@keyframes stripPulse2 {
+    0%   { opacity: 0.3; }
+    100% { opacity: 0.7; }
 }
+
 
 /* Hero Snowfall */
 .hero-snow {
@@ -987,9 +992,9 @@ body {
 
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
-    /* 1. Hide EXPLORE WORK button & EST text on mobile */
+    /* 1. Hide EXPLORE WORK button & bottom-left text on mobile */
     .hero-btn-container,
-    #hero-est-text {
+    .hero-bottom-left {
         display: none !important;
     }
 
@@ -1008,8 +1013,6 @@ body {
         max-width: 94vw !important;
         z-index: 99999 !important;
         display: flex !important;
-        opacity: 1 !important;
-        visibility: visible !important;
         border: 1px solid rgba(0, 0, 0, 0.12) !important;
         box-shadow: 0 4px 25px rgba(0, 0, 0, 0.18) !important;
     }
@@ -1061,5 +1064,58 @@ body {
     .work-details {
         order: 2 !important;
         padding: 1.8rem 1.4rem;
+    }
+
+    /* ===== MOBILE PERFORMANCE OPTIMIZATIONS ===== */
+
+    /* Kill snowfall particles — 20 infinite CSS animations at 120fps = GPU killer */
+    .hero-snow {
+        display: none !important;
+    }
+
+    /* Light strips are now GPU-friendly (compositor-only), safe to keep on mobile */
+    .bg-neon-strips {
+        opacity: 0.3;
+    }
+
+    /* Remove blur from placeholder glow ring */
+    .placeholder-glow-ring {
+        filter: none !important;
+        opacity: 0.4;
+    }
+
+    /* Strip will-change from heavy elements to free GPU memory */
+    .hero,
+    .hero-content,
+    .hero-bottom-left,
+    .hero-btn-container,
+    .neon-strip,
+    .cursor-glow,
+    .preloader {
+        will-change: auto !important;
+    }
+}
+
+/* Respect user's motion preferences — kills all animations for battery saver / accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .hero-snow,
+    .bg-neon-strips {
+        display: none !important;
+    }
+
+    .neon-strip {
+        animation: none !important;
+    }
+
+    .preloader-bg-glow {
+        animation: none !important;
+    }
+
+    .work-grid-card,
+    .about-tags span,
+    .contact-link,
+    .work-case-study-btn,
+    .work-more-link {
+        transition: none !important;
     }
 }

@@ -57,9 +57,10 @@ const { title = "Hanzla Masood — Digital Architect Portfolio" } = Astro.props;
         document.addEventListener('DOMContentLoaded', () => {
             const hasGsap = typeof gsap !== 'undefined';
 
-            // Lenis Smooth Scroll Engine
+            // Lenis Smooth Scroll Engine — disabled on mobile/touch (native scroll is smoother + saves battery)
             let lenis = null;
-            if (typeof Lenis !== 'undefined') {
+            const isTouchDevice = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
+            if (typeof Lenis !== 'undefined' && !isTouchDevice) {
                 lenis = new Lenis({
                     duration: 1.2,
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
