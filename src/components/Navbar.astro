@@ -81,7 +81,7 @@
             let isAnimating = false;
 
             btn.addEventListener('mouseenter', () => {
-                if (isAnimating || window.innerWidth <= 768) return;
+                if (isAnimating || (btn.classList.contains('work-with-us') && window.innerWidth <= 768)) return;
                 isAnimating = true;
 
                 // Lock button width so glitch chars don't resize navbar
