@@ -78,12 +78,12 @@
 
             // Seamless 100% Unified Solid White Header (Zero Dividing Seam)
             if (brandBadge && navbar && window.innerWidth > 768) {
-                const initialBrandLeft = 30;
-                const initialNavRight = 30;
-
                 const brandW = brandBadge.offsetWidth || 160;
                 const navW = navbar.offsetWidth || 380;
-                
+
+                const initialBrandLeft = 30;
+                const initialNavLeft = window.innerWidth - 30 - navW;
+
                 // Gap shrinks to -1px to eliminate any pixel divide line
                 const gap = (1 - progress) * 16 - progress * 1;
                 const totalCombinedWidth = brandW + gap + navW;
@@ -91,14 +91,12 @@
                 const centerLeft = (window.innerWidth - totalCombinedWidth) / 2;
                 const targetBrandLeft = centerLeft;
                 const targetNavLeft = centerLeft + brandW + gap;
-                const initialNavLeft = window.innerWidth - initialNavRight - navW;
 
-                const currentBrandLeft = initialBrandLeft + (targetBrandLeft - initialBrandLeft) * progress;
-                const currentNavLeft = initialNavLeft + (targetNavLeft - initialNavLeft) * progress;
+                const brandDeltaX = (targetBrandLeft - initialBrandLeft) * progress;
+                const navDeltaX = (targetNavLeft - initialNavLeft) * progress;
 
-                brandBadge.style.left = `${currentBrandLeft}px`;
-                navbar.style.left = `${currentNavLeft}px`;
-                navbar.style.right = 'auto';
+                brandBadge.style.transform = `translate3d(${brandDeltaX}px, 0, 0)`;
+                navbar.style.transform = `translate3d(${navDeltaX}px, 0, 0)`;
 
                 // Morph inner border-radii to 0px
                 const innerRadius = (1 - progress) * 6;
