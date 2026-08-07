@@ -12,12 +12,13 @@ interface Props {
   iconType?: 'sun' | 'home' | 'cpu';
   image?: ImageMetadata | string;
   link?: string;
+  index?: number;
 }
 
-const { num, title, description, badge, tag, isReversed = false, iconType = 'sun', image, link = "https://github.com/hhanzla" } = Astro.props;
+const { num, title, description, badge, tag, isReversed = false, iconType = 'sun', image, link = "https://github.com/hhanzla", index = 0 } = Astro.props;
 ---
 
-<div class="work-grid-card">
+<div class="work-grid-card" style={`--card-index: ${index};`}>
     {isReversed ? (
         <>
             <div class="work-details">
