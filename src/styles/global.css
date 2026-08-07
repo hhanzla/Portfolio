@@ -6,13 +6,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch;
 }
 
 html,
 body {
-    scroll-behavior: smooth !important;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -538,12 +536,14 @@ body {
     background: #121212;
     background: radial-gradient(circle at top right, #1F1F1F 0%, #121212 60%, #080808 100%);
     will-change: width, margin, border-radius;
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-content,
 .hero-bottom-left,
 .hero-btn-container {
     will-change: padding, left, right;
+    transition: padding 0.3s cubic-bezier(0.16, 1, 0.3, 1), left 0.3s cubic-bezier(0.16, 1, 0.3, 1), right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-content {
