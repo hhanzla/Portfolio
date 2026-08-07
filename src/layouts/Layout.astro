@@ -57,15 +57,17 @@ const { title = "Hanzla Masood — Web & Desktop Application Developer" } = Astr
         document.addEventListener('DOMContentLoaded', () => {
             const hasGsap = typeof gsap !== 'undefined';
 
-            // Lenis Smooth Scroll Engine — disabled on mobile/touch (native scroll is smoother + saves battery)
+            // Optimized Lenis Smooth Scroll Engine (Mobile & Desktop)
             let lenis = null;
-            const isTouchDevice = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
-            if (typeof Lenis !== 'undefined' && !isTouchDevice) {
+            if (typeof Lenis !== 'undefined') {
+                const isMobile = window.matchMedia('(max-width: 768px)').matches;
                 lenis = new Lenis({
-                    duration: 1.2,
+                    duration: isMobile ? 0.9 : 1.2,
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                     smoothWheel: true,
-                    touchMultiplier: 1.5
+                    smoothTouch: true,
+                    touchMultiplier: isMobile ? 1.2 : 1.5,
+                    wheelMultiplier: 1.0
                 });
 
                 function raf(time) {
